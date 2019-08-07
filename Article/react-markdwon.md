@@ -1,4 +1,4 @@
-[tags]: react,markdown 
+[tag]: react,markdown 
 [desc]: react-markdown  
 [ct]: 2019-07-31  
 
