@@ -1,6 +1,5 @@
 [tag]: react,markdown 
 [desc]: react-markdown  
-[ct]: 2019-07-31  
 
 # Live demo
 
@@ -18,6 +17,7 @@ Changes are automatically rendered as you type.
 </blockquote>
 
 ## How about some code?
+
 ```js
 var React = require('react');
 var Markdown = require('react-markdown');
@@ -27,7 +27,7 @@ React.render(
   document.getElementById('content')
 );
 ```
-
+****
 Pretty neat, eh?
 
 ## Tables?
