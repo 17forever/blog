@@ -1,5 +1,4 @@
 [tag]: react,markdown 
-[desc]: react-markdown  
 
 # Live demo
 
