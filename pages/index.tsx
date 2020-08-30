@@ -1,10 +1,12 @@
 import React from 'react'
-import Layout from '../components/Layout'
+import Layout from '../components/Layout/index'
+// import { initializeIcons } from '@uifabric/icons';
+// initializeIcons();
 
 const Index = () => {
   return (
     <Layout>
-      hh
+      index page首页
     </Layout>
   )
 }
