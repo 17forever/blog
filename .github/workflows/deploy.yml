@@ -17,17 +17,5 @@ jobs:
 
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: git-check
-        uses: actions/checkout@v2
-
-      - name: node install
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12'
-      - run: npm install
-      
       - name: deploy
-        with:
-          repo-token:  ${{ secrets.ACCESS_TOKEN }}
-      - run: npm run deploy
+        run: npm run deploy
