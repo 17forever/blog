@@ -22,6 +22,11 @@ const navLinkGroups: INavLinkGroup[] = [
         url: '/blog/post',
         key: 'key2',
       },
+      {
+        name: 'Tofu',
+        url: '/blog/tofu',
+        key: 'key3'
+      }
     ],
   },
 ];
