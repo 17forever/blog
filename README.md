@@ -1,0 +1,1 @@
+[Link](7infen.github.io/blog/)
