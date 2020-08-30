@@ -18,8 +18,9 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+      - uses: oleksiyrudenko/gha-git-credentials@v1
         with:
-          token: ${{ secrets.ACCESS_TOKEN}}
+          token: '${{ secrets.GITHUB_TOKEN }}'
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
