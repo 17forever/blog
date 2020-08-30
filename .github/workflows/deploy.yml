@@ -18,6 +18,8 @@ jobs:
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
       - uses: actions/checkout@v2
+        with:
+          token: ${{ secrets.ACCESS_TOKEN}}
       - name: Use Node.js
         uses: actions/setup-node@v1
         with:
