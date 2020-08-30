@@ -5,7 +5,7 @@ import StyledLayout from '../../styled/layout'
 export default function Layout() {
   return (
     <StyledLayout>
-      123s
+      123s是
     </StyledLayout>
   );
 }
