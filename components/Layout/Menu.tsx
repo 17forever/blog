@@ -1,7 +1,7 @@
 import React from 'react'
-import PropTypes from 'prop-types'
-import Link from 'next/link'
-import { Nav, INavLink, INavStyles, INavLinkGroup } from '@fluentui/react';
+// import PropTypes from 'prop-types'
+// import Link from 'next/link'
+import { Nav, INavStyles, INavLinkGroup } from '@fluentui/react';
 
 const navLinkGroups: INavLinkGroup[] = [
   {

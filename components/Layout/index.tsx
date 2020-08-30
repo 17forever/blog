@@ -4,6 +4,7 @@ import { StyledLayout, StyledLayoutLeft, StyledLayoutRight, Logo, LeftTop, LeftB
 import Menu from './Menu'
 import { Link, Text } from '@fluentui/react'
 
+// @ts-ignore
 export default function Layout(props) {
   const { children } = props
   return (

@@ -1,7 +1,7 @@
 // import App from 'next/app'
 import 'normalize.css'
 
-
+// @ts-ignore
 function MyApp({ Component, pageProps }) {
   return <Component {...pageProps} />
 }
