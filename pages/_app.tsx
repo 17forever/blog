@@ -1,9 +1,19 @@
-// import App from 'next/app'
+import Layout from '../components/Layout/index'
+import Helmet from 'react-helmet'
 import 'normalize.css'
 
 // @ts-ignore
-function MyApp({ Component, pageProps }) {
-  return <Component {...pageProps} />
+function App({ Component, pageProps }) {
+  return (
+    <>
+      <Helmet>
+        <title>7inFen/Blog</title>
+      </Helmet>
+      <Layout>
+        <Component {...pageProps} />
+      </Layout>
+    </>
+  )
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -18,4 +28,4 @@ function MyApp({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default MyApp
+export default App
