@@ -1,7 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 
-const timelineDirectory = path.join(process.cwd(), 'data/timeline')
+const timelineDirectory = path.join(process.cwd(), 'public/data/timeline')
 
 const parseTimelineContent = content => {
   return content.split('---').map(item => {

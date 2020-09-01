@@ -1,5 +1,5 @@
 // @ts-nocheck
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
 import { getTimelineFileList, getTimelineFileInfo } from '../../lib/getTimeline'
 import { Dropdown, IDropdownOption, IDropdownStyles } from '@fluentui/react'
@@ -19,17 +19,19 @@ export default function TimeLineIndex(props) {
     })
   )
   const [data, setData] = useState([])
-  const handleChange = (e, option) => {
-    const file = option.key
-    setSelectedFile(file)
+  useEffect(() => {
     request('/getTimelineContent',
       {
-        file
+        file: selectedFile
       }
     )
       .then(data => {
         setData(data)
       })
+  }, [selectedFile])
+  const handleChange = (e, option) => {
+    const file = option.key
+    setSelectedFile(file)
   }
   return (
     <>
@@ -47,12 +49,12 @@ export default function TimeLineIndex(props) {
               date, weather, mood, body
             } = item
             return (
-              <>
+              <div key={date}>
                 <div>{date}</div>
                 <div>{weather}</div>
                 <div>{mood}</div>
                 <div>{body}</div>
-              </>
+              </div>
             )
           }
         )
