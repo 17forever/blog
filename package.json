@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "test": "tsc",
-    "dev": "next",
+    "dev": "cross-env NODE_OPTIONS='--inspect' next dev",
     "build": "next build",
     "start": "next start",
     "export": "npm run build && next export",
@@ -36,6 +36,7 @@
     "@types/react-helmet": "^6.1.0",
     "@types/styled-components": "^5.1.2",
     "babel-plugin-styled-components": "^1.11.1",
+    "cross-env": "^7.0.2",
     "typescript": "^4.0.2"
   }
 }

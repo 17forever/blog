@@ -1,6 +1,8 @@
 import Layout from '../components/Layout/index'
 import Helmet from 'react-helmet'
 import 'normalize.css'
+import { initializeIcons } from '@uifabric/icons';
+initializeIcons();
 
 // @ts-ignore
 function App({ Component, pageProps }) {

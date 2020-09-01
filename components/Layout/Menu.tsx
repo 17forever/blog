@@ -2,6 +2,9 @@ import React from 'react'
 // import PropTypes from 'prop-types'
 // import Link from 'next/link'
 import { Nav, INavStyles, INavLinkGroup } from '@fluentui/react';
+import { basePath } from '../../next.config'
+
+const resolvePath = path => `${basePath}${path}`
 
 const navLinkGroups: INavLinkGroup[] = [
   {
@@ -14,17 +17,17 @@ const navLinkGroups: INavLinkGroup[] = [
       // },
       {
         name: '时光轴',
-        url: '/blog/timeline',
+        url: resolvePath('/timeline'),
         key: 'key1',
       },
       {
         name: '文章',
-        url: '/blog/post',
+        url: resolvePath('/posts'),
         key: 'key2',
       },
       {
         name: '豆腐',
-        url: '/blog/tofu',
+        url: resolvePath('/tofu'),
         key: 'key3'
       }
     ],

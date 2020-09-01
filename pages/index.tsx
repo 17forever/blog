@@ -1,13 +1,12 @@
-import React from 'react'
-// import { initializeIcons } from '@uifabric/icons';
-// initializeIcons();
+import { useEffect } from 'react'
+import { useRouter } from 'next/router'
 
 const Index = () => {
-  return (
-    <>
-      home
-    </>
-  )
+  const router = useRouter()
+  useEffect(() => {
+    router.replace('/timeline')
+  }, [])
+  return null
 }
 
 export default Index
