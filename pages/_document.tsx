@@ -1,5 +1,6 @@
-import * as React from 'react';
-import Document, { Head, Main, NextScript } from 'next/document';
+/* eslint-disable @typescript-eslint/explicit-member-accessibility */
+import Document, { DocumentContext } from 'next/document';
+import { ServerStyleSheet } from 'styled-components';
 import { Stylesheet, InjectionMode } from '@uifabric/merge-styles';
 import { resetIds } from '@uifabric/utilities';
 
@@ -12,28 +13,35 @@ stylesheet.setConfig({
   namespace: 'server',
 });
 
-// Now set up the document, and just reset the stylesheet.
 export default class MyDocument extends Document {
-  static getInitialProps({ renderPage }) {
+  static async getInitialProps(ctx: DocumentContext) {
     stylesheet.reset();
     resetIds();
 
-    const page = renderPage((App) => (props) => <App {...props} />);
+    const sheet = new ServerStyleSheet();
+    const originalRenderPage = ctx.renderPage;
 
-    return { ...page, styleTags: stylesheet.getRules(true) };
-  }
+    try {
+      ctx.renderPage = () =>
+        originalRenderPage({
+          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
+        });
 
-  render() {
-    return (
-      <html>
-        <Head>
-          <style type="text/css" dangerouslySetInnerHTML={{ __html: this.props.styleTags }} />
-        </Head>
-        <body>
-          <Main />
-          <NextScript />
-        </body>
-      </html>
-    );
+      const initialProps = await Document.getInitialProps(ctx);
+      const styleTags = stylesheet.getRules(true);
+
+      return {
+        ...initialProps,
+        styles: (
+          <>
+            {initialProps.styles}
+            <style type="text/css" dangerouslySetInnerHTML={{ __html: styleTags }} />
+            {sheet.getStyleElement()}
+          </>
+        ),
+      };
+    } finally {
+      sheet.seal();
+    }
   }
 }
