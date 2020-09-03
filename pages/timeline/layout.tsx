@@ -1,33 +1,30 @@
 // @ts-nocheck
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import { Dropdown, IDropdownOption, IDropdownStyles } from '@fluentui/react'
-import { useRouter } from 'next/router'
+import React, { useState, useEffect } from 'react';
+import PropTypes from 'prop-types';
+import { Dropdown, IDropdownOption, IDropdownStyles } from '@fluentui/react';
+import { useRouter } from 'next/router';
 
 const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 300 },
 };
 
 export default function TimeLineLayout(props) {
-  const { data = [], value: valueFormProps = null, children } = props
-  const [value, setValue] = useState(valueFormProps)
-
-  const options: IDropdownOption[] = data.map(
-    item => ({
-      key: item,
-      text: item
-    })
-  )
-  const router = useRouter()
+  const { data = [], value: valueFormProps = null, children } = props;
+  const [value, setValue] = useState(valueFormProps);
+  const options: IDropdownOption[] = data.map((item) => ({
+    key: item,
+    text: item,
+  }));
+  const router = useRouter();
   // useEffect(() => {
   //   router.push(`/timeline/${value}`)
   // }, [value])
 
   const handleChange = (e, option) => {
-    const value = option.key
-    setValue(value)
-    router.push(`/timeline/${value}`)
-  }
+    const value = option.key;
+    setValue(value);
+    router.push(`/timeline/${value}`);
+  };
 
   return (
     <>
@@ -43,5 +40,4 @@ export default function TimeLineLayout(props) {
   );
 }
 
-TimeLineLayout.propTypes = {
-}
+TimeLineLayout.propTypes = {};

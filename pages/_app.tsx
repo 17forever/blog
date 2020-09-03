@@ -1,6 +1,6 @@
-import Layout from '../components/Layout/index'
-import Helmet from 'react-helmet'
-import 'normalize.css'
+import Layout from '../components/Layout/index';
+import Helmet from 'react-helmet';
+import 'normalize.css';
 import { initializeIcons } from '@uifabric/icons';
 initializeIcons();
 
@@ -15,7 +15,7 @@ function App({ Component, pageProps }) {
         <Component {...pageProps} />
       </Layout>
     </>
-  )
+  );
 }
 
 // Only uncomment this method if you have blocking data requirements for
@@ -30,4 +30,4 @@ function App({ Component, pageProps }) {
 //   return { ...appProps }
 // }
 
-export default App
+export default App;
