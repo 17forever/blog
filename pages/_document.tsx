@@ -1,29 +1,39 @@
-import Document, { DocumentContext } from 'next/document';
-import { ServerStyleSheet } from 'styled-components';
+import * as React from 'react';
+import Document, { Head, Main, NextScript } from 'next/document';
+import { Stylesheet, InjectionMode } from '@uifabric/merge-styles';
+import { resetIds } from '@uifabric/utilities';
 
+// Do this in file scope to initialize the stylesheet before Fabric components are imported.
+const stylesheet = Stylesheet.getInstance();
+
+// Set the config.
+stylesheet.setConfig({
+  injectionMode: InjectionMode.none,
+  namespace: 'server',
+});
+
+// Now set up the document, and just reset the stylesheet.
 export default class MyDocument extends Document {
-  static async getInitialProps(ctx: DocumentContext) {
-    const sheet = new ServerStyleSheet();
-    const originalRenderPage = ctx.renderPage;
+  static getInitialProps({ renderPage }) {
+    stylesheet.reset();
+    resetIds();
 
-    try {
-      ctx.renderPage = () =>
-        originalRenderPage({
-          enhanceApp: (App) => (props) => sheet.collectStyles(<App {...props} />),
-        });
+    const page = renderPage((App) => (props) => <App {...props} />);
 
-      const initialProps = await Document.getInitialProps(ctx);
-      return {
-        ...initialProps,
-        styles: (
-          <>
-            {initialProps.styles}
-            {sheet.getStyleElement()}
-          </>
-        ),
-      };
-    } finally {
-      sheet.seal();
-    }
+    return { ...page, styleTags: stylesheet.getRules(true) };
+  }
+
+  render() {
+    return (
+      <html>
+        <Head>
+          <style type="text/css" dangerouslySetInnerHTML={{ __html: this.props.styleTags }} />
+        </Head>
+        <body>
+          <Main />
+          <NextScript />
+        </body>
+      </html>
+    );
   }
 }
