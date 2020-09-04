@@ -1,10 +1,9 @@
-import React from 'react'
-// import PropTypes from 'prop-types'
-// import Link from 'next/link'
+import React from 'react';
+import { useRouter } from 'next/router';
 import { Nav, INavStyles, INavLinkGroup } from '@fluentui/react';
-import { basePath } from '../../next.config'
+import { basePath } from '../../next.config';
 
-const resolvePath = path => `${basePath}${path}`
+const resolvePath = (path: string): string => `${basePath}${path}`;
 
 const navLinkGroups: INavLinkGroup[] = [
   {
@@ -18,18 +17,18 @@ const navLinkGroups: INavLinkGroup[] = [
       {
         name: '时光轴',
         url: resolvePath('/timeline'),
-        key: 'key1',
+        key: 'timeline',
       },
       {
         name: '文章',
         url: resolvePath('/posts'),
-        key: 'key2',
+        key: 'posts',
       },
       {
         name: '豆腐',
         url: resolvePath('/tofu'),
-        key: 'key3'
-      }
+        key: 'tofu',
+      },
     ],
   },
 ];
@@ -41,19 +40,18 @@ const navStyles: Partial<INavStyles> = {
 };
 
 const Menu: React.FunctionComponent = () => {
+  const router = useRouter();
+  const { asPath } = router;
   return (
     <Nav
-      // onLinkClick={_onLinkClick}
-      selectedKey="key1"
+      selectedKey={asPath.split('/')[1]}
       ariaLabel="网站导航"
       styles={navStyles}
       groups={navLinkGroups}
     />
   );
-}
+};
 
-Menu.propTypes = {
+Menu.propTypes = {};
 
-}
-
-export default Menu
+export default Menu;
