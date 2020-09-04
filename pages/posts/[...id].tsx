@@ -21,21 +21,17 @@ const StyledInfoItem = styled.span`
 `
 
 export default function PostInfo(props) {
-  console.log(props)
   const {
+    name,
     data: { body, ...restProps },
   } = props
   return (
-    <Layout>
+    <Layout current={name}>
       <StyledContent>
         <StyledInfo>
-          {
-            Object.keys({ ...restProps }).map(
-              key => (
-                <StyledInfoItem key={key}>{restProps[key]}</StyledInfoItem>
-              )
-            )
-          }
+          {Object.keys({ ...restProps }).map((key) => (
+            <StyledInfoItem key={key}>{restProps[key]}</StyledInfoItem>
+          ))}
         </StyledInfo>
         <StyledBody>
           <Markdown data={body} />

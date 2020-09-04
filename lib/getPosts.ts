@@ -1,5 +1,10 @@
 import fs from 'fs'
 import path from 'path'
+import pinyin from 'pinyin'
+
+const py = name => pinyin(name, {
+  style: pinyin.STYLE_NORMAL
+}).flat().join('-')
 
 const postsDirectory = path.join(process.cwd(), 'data/posts')
 const dateList = fs.readdirSync(postsDirectory, 'utf-8') || []
@@ -18,9 +23,11 @@ export const getPostsFileList = (): any => {
     return {
       date,
       list: fileList.map((file): object => {
+        const name = removeExtension(file)
         return {
           date,
-          name: removeExtension(file),
+          name,
+          path: py(name)
         }
       }),
     }
@@ -51,7 +58,11 @@ export /**
 const getPostsDateFileList = (date: string): any => {
   const fileList = fs.readdirSync(`${postsDirectory}/${date}`, 'utf-8') || []
   return fileList.map((file) => {
-    return removeExtension(file)
+    const name = removeExtension(file)
+    return {
+      name,
+      path: py(name)
+    }
   })
 }
 
@@ -65,15 +76,44 @@ const getPostsFileIdList = (): any => {
   dataList.forEach((dataItem) => {
     const { list = [] } = dataItem
     list.forEach((item) => {
-      const { date, name } = item
+      const { date, path } = item
       data.push({
         params: {
-          id: [date, name],
+          id: [date, path],
         },
       })
     })
   })
   return data
+}
+
+export const getPostData = (id) => {
+  console.log(id)
+  const [date, _path] = id
+  let name = ''
+  const dataList = getPostsFileList()
+  dataList.forEach(item => {
+    if (item.date === date) {
+      item.list.forEach(i => {
+        if (i.path === _path) {
+          name = i.name
+        }
+      });
+    }
+  });
+  if (name) {
+    const fullPath = path.join(postsDirectory, date, addExtension(name))
+    const content = fs.readFileSync(fullPath, 'utf-8')
+    return {
+      id,
+      name,
+      data: parsePostContent(content),
+    }
+  }
+  return {
+    id,
+    data: null
+  }
 }
 
 const parsePostContent = (content: string) => {
@@ -92,15 +132,5 @@ const parsePostContent = (content: string) => {
       {}
     ),
     body: body.trim(),
-  }
-}
-
-export const getPostData = (id: string) => {
-  const [date, name] = id
-  const fullPath = path.join(postsDirectory, date, addExtension(name))
-  const content = fs.readFileSync(fullPath, 'utf-8')
-  return {
-    id,
-    data: parsePostContent(content),
   }
 }

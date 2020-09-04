@@ -16,11 +16,15 @@ export default function PostsDate(props) {
   return (
     <Layout>
       <StyledList>
-        {data.map((item: string): JSX.Element => (
-          <li key={item}>
-            <Link href={`/posts/${date}/${item}`}>{item}</Link>
-          </li>
-        ))}
+        {data.map(
+          (item: string): JSX.Element => (
+            <li key={item.name}>
+              <Link href="/posts/[...id]" as={`/posts/${date}/${item.path}`}>
+                {item.name}
+              </Link>
+            </li>
+          ),
+        )}
       </StyledList>
     </Layout>
   )

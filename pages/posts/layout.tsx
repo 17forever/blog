@@ -5,11 +5,29 @@ import { Breadcrumb, IBreadcrumbItem, IDividerAsProps, Icon, TooltipHost } from 
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 
-const StyledContent = styled.div``
-const StyledLayout = styled.div``
+const StyledContent = styled.div`
+  height: calc(100% - 50px);
+  overflow: auto;
+`
+const StyledLayout = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  & > div:first-child {
+    height: 50px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+  }
+`
 const StyledBreadcrumb = styled(Breadcrumb)`
+  margin: 0;
   h4 {
     margin: 0;
+    div {
+      position: relative;
+      bottom: 2px;
+    }
   }
   .ms-Breadcrumb-list {
     display: flex;
@@ -30,7 +48,7 @@ const getCustomOverflowIcon = (): JSX.Element => {
 }
 
 export default function PostsLayout(props) {
-  const { children } = props
+  const { children, current } = props
   const [data, setData] = useState([])
 
   const router = useRouter()
@@ -47,7 +65,12 @@ export default function PostsLayout(props) {
         item.onClick = onBreadcrumbItemClick
       })
     }
+    console.log(current)
     // 设置当前页的属性
+    if (current) {
+      pathData.slice(-1)[0].text = current
+      pathData.slice(-1)[0].key = current
+    }
     pathData.slice(-1)[0].isCurrentItem = true
     pathData.slice(-1)[0].as = 'h4'
     // 设置posts首页

@@ -87,7 +87,7 @@ const onRenderCell = (nestingDepth?: number, item?: any, itemIndex?: number): Re
   return item ? (
     <div role="row" data-selection-index={itemIndex}>
       <StyledListName role="cell" className={classNames.name}>
-        <RouteLink href={`/posts/${item!.date}/${item!.name}`}>{item!.name}</RouteLink>
+        <RouteLink href='/posts/[...id]' as={`/posts/${item!.date}/${item!.path}`}>{item!.name}</RouteLink>
       </StyledListName>
     </div>
   ) : null
