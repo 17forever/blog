@@ -78,12 +78,15 @@ const getPostsFileIdList = (): any => {
 
 const parsePostContent = (content: string) => {
   const [info, body] = content.split('---').filter((i) => !!i)
-  const infoList = info.split('\n').filter(i => !!i)
+  const infoList = info.split('\n').map(
+    item => item.replace(/\s/, '')
+  ).filter(i => !!i)
+  console.log(infoList)
   return {
     ...infoList.reduce(
       (prev, next) => {
         const [key, value] = next.split(':')
-        prev[key.trim()] = value.trim()
+        prev[key?.trim()] = value?.trim()
         return prev
       },
       {}

@@ -11,6 +11,13 @@ const StyledMarkdown = styled.div`
     line-height: 1.6;
     color: ${theme.palette.neutralDark};
   }
+  pre {
+    padding: 0;
+    margin-left: 2em;
+  }
+  code {
+    font-family: Consolas, 'Courier New', Courier, monospace;
+  }
 `
 
 const md = new MarkdownIt({
