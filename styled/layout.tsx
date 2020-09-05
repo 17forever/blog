@@ -18,10 +18,10 @@ export const StyledLayoutLeft = styled.div`
 
 export const StyledLayoutRight = styled.div`
   flex: 1;
-  height: 100%;
+  height: calc(100% - 20px);
   overflow-x: hidden;
   overflow-y: auto;
-  padding: 20px;
+  padding: 20px 0 0 20px;
 `
 
 export const StyledLogoWrap = styled.div`

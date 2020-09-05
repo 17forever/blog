@@ -1,11 +1,11 @@
 import React from 'react'
 import { getTimelineFileList, getTimelineData } from '../../lib/getTimeline'
-import TimelineLayout from './layout'
 import styled from 'styled-components'
 import theme from '../../utils/getTheme'
 import Markdown from '../../components/Markdown'
 import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from 'date-fns'
 import FixedTopLayout from '../../components/Layout/FixedTop'
+import DateSelectInInfoPage from './DateSelectInInfopage'
 
 const LEFT_WIDTH = 170
 const DAY_SIZE = 20
@@ -125,12 +125,12 @@ const populateData = (data, date: string) => {
 }
 
 export default function Timeline(props: IProps) {
-  const { data, id } = props
+  const { data, id, date } = props
   const [dataList, fromStartOfMonth] = populateData(data, id)
 
   const dataMonthIsBeforeMonth = differenceInMonths(new Date(), new Date(id)) > 0
   return (
-    <FixedTopLayout>
+    <FixedTopLayout top={<DateSelectInInfoPage data={date} value={id} />}>
       <StyledBlockWrap>
         {dataMonthIsBeforeMonth ? <StyledLineEndIndicatorCircle /> : <StyledLineEndIndicatorArrow />}
         {dataList.map((item, idx) => {
@@ -167,11 +167,11 @@ interface IParams {
 
 export async function getStaticProps({ params }: IParams) {
   const data = getTimelineData(params.id)
-  const paths = getTimelineFileList().map((item) => item.params.id)
+  const date = getTimelineFileList().map((item) => item.params.id)
   return {
     props: {
       ...data,
-      paths,
+      date,
     },
   }
 }
