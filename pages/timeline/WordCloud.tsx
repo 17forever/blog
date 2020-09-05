@@ -11,7 +11,7 @@ const StyledLayout = styled.div`
 
 const StyledTitle = styled.h2``
 export default function TimeLineWordCloud(props) {
-  const { data } = props
+  const { data = [] } = props
 
   return (
     <TagCloud
