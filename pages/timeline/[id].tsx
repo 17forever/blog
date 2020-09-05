@@ -1,44 +1,185 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { getTimelineFileList, getTimelineData } from '../../lib/getTimeline';
-import TimelineLayout from './layout';
+import React from 'react'
+import { getTimelineFileList, getTimelineData } from '../../lib/getTimeline'
+import TimelineLayout from './layout'
+import styled from 'styled-components'
+import theme from '../../utils/getTheme'
+import Markdown from '../../components/Markdown'
+import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from 'date-fns'
+import FixedTopLayout from '../../components/Layout/FixedTop'
 
-export default function Timeline(props) {
-  const { paths, data, id } = props;
-  return (
-    <TimelineLayout data={paths} value={id}>
-      {data.map((item) => {
-        const { date, weather, mood, body } = item;
-        return (
-          <>
-            {date}
-            {weather}
-            {mood}
-            {body}
-          </>
-        );
-      })}
-    </TimelineLayout>
-  );
+const LEFT_WIDTH = 170
+const DAY_SIZE = 20
+
+const StyledBlockWrap = styled.div`
+  margin: 50px;
+  position: relative;
+  &:before {
+    content: '';
+    display: block;
+    width: 1px;
+    height: 100%;
+    background: ${theme.palette.neutralQuaternary};
+    position: absolute;
+    left: ${LEFT_WIDTH}px;
+  }
+  &:after {
+    content: '';
+    display: block;
+    width: 10px;
+    height: 1px;
+    background: ${theme.palette.neutralQuaternary};
+    position: absolute;
+    left: ${LEFT_WIDTH - 5}px;
+    bottom: 0;
+  }
+`
+const StyledLineEndIndicatorCircle = styled.div`
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  position: absolute;
+  left: ${LEFT_WIDTH - 4}px;
+  top: -8px;
+  border: 1px solid ${theme.palette.neutralQuaternary};
+  /* background: ${theme.palette.neutralQuaternary}; */
+`
+
+const StyledLineEndIndicatorArrow = styled.div`
+  width: 7px;
+  height: 7px;
+  border: 1px solid ${theme.palette.neutralQuaternary};
+  border-right-color: transparent;
+  border-bottom-color: transparent;
+  transform: rotate(45deg);
+  position: absolute;
+  left: ${LEFT_WIDTH - 4}px;
+  top: 1px;
+`
+
+const StyledItemBlock = styled.div`
+  display: flex;
+  line-height: 1.6;
+  padding-top: ${({ size }) => size * DAY_SIZE}px;
+`
+const StyledItemLeft = styled.div`
+  width: ${LEFT_WIDTH}px;
+  flex: none;
+  text-align: right;
+  font-size: 13px;
+  .top {
+    color: ${theme.palette.neutralSecondary};
+    border-bottom: 1px solid ${theme.palette.neutralQuaternary};
+    padding-right: 10px;
+    padding-bottom: 2px;
+  }
+  .bottom {
+    font-size: 12px;
+    color: ${theme.palette.neutralTertiary};
+    margin-top: 2px;
+    padding-right: 10px;
+    span {
+      margin-left: 10px;
+    }
+  }
+`
+const StyledItemRight = styled.div`
+  margin-left: 20px;
+  font-size: 14px;
+  #_markdown {
+    & > :first-child {
+      margin-top: 21px;
+      padding-top: 0;
+    }
+    & > * {
+      text-indent: 0;
+    }
+  }
+`
+
+const StyledMbOfStartMonth = styled.div`
+  height: ${({ size }) => size * DAY_SIZE}px;
+`
+
+interface IProps {
+  paths: string
+  data: any[]
+  id: string
 }
 
-Timeline.propTypes = {};
+const populateData = (data, date: string) => {
+  const START_OF_MONTH = startOfMonth(new Date(date))
+  const END_OF_MONTH = endOfMonth(new Date(date))
+  const dataList: [] = data.map((item, idx) => {
+    const itemDate = new Date(item!.date)
+    return {
+      ...item,
+      // isEndOfMonth: differenceInDays(END_OF_MONTH, itemDate) === 0,
+      intervalDaysOfPrevOrEnd:
+        idx === 0
+          ? // ? differenceInDays(END_OF_MONTH, itemDate)
+            0
+          : differenceInDays(new Date(data[idx - 1]!.date), itemDate) - 1,
+    }
+  })
+  return [dataList, differenceInDays(new Date(dataList.slice(-1)[0].date), START_OF_MONTH)]
+}
 
-export async function getStaticProps({ params }) {
-  const data = getTimelineData(params.id);
-  const paths = getTimelineFileList().map((item) => item.params.id);
+export default function Timeline(props: IProps) {
+  const { data, id } = props
+  const [dataList, fromStartOfMonth] = populateData(data, id)
+
+  const dataMonthIsBeforeMonth = differenceInMonths(new Date(), new Date(id)) > 0
+  return (
+    <FixedTopLayout>
+      <StyledBlockWrap>
+        {dataMonthIsBeforeMonth ? <StyledLineEndIndicatorCircle /> : <StyledLineEndIndicatorArrow />}
+        {dataList.map((item, idx) => {
+          const { date, body, intervalDaysOfPrevOrEnd, ...rest } = item
+          return (
+            <StyledItemBlock key={date} size={idx === 0 ? 2 : intervalDaysOfPrevOrEnd}>
+              <StyledItemLeft>
+                <div>
+                  <span className="top">{date}</span>
+                  <div className="bottom">
+                    {Object.keys({ ...rest }).map((key) => (
+                      <span key={key}>{rest[key]}</span>
+                    ))}
+                  </div>
+                </div>
+              </StyledItemLeft>
+              <StyledItemRight>
+                <Markdown data={body} />
+              </StyledItemRight>
+            </StyledItemBlock>
+          )
+        })}
+        <StyledMbOfStartMonth size={fromStartOfMonth} />
+      </StyledBlockWrap>
+    </FixedTopLayout>
+  )
+}
+
+interface IParams {
+  params: {
+    id: string
+  }
+}
+
+export async function getStaticProps({ params }: IParams) {
+  const data = getTimelineData(params.id)
+  const paths = getTimelineFileList().map((item) => item.params.id)
   return {
     props: {
       ...data,
       paths,
     },
-  };
+  }
 }
 
 export async function getStaticPaths() {
-  const paths = getTimelineFileList();
+  const paths = getTimelineFileList()
   return {
     paths,
     fallback: false,
-  };
+  }
 }

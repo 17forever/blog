@@ -4,22 +4,8 @@ import PropTypes from 'prop-types'
 import { Breadcrumb, IBreadcrumbItem, IDividerAsProps, Icon, TooltipHost } from '@fluentui/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
+import FixedTopLayout from '../../components/Layout/FixedTop'
 
-const StyledContent = styled.div`
-  height: calc(100% - 50px);
-  overflow: auto;
-`
-const StyledLayout = styled.div`
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  & > div:first-child {
-    height: 50px;
-    display: flex;
-    align-items: center;
-    border-bottom: 1px solid #eee;
-  }
-`
 const StyledBreadcrumb = styled(Breadcrumb)`
   margin: 0;
   h4 {
@@ -65,7 +51,6 @@ export default function PostsLayout(props) {
         item.onClick = onBreadcrumbItemClick
       })
     }
-    console.log(current)
     // 设置当前页的属性
     if (current) {
       pathData.slice(-1)[0].text = current
@@ -89,19 +74,20 @@ export default function PostsLayout(props) {
     router.push(`/posts/${item!.key}`)
   }
   return (
-    <StyledLayout>
-      <StyledBreadcrumb
-        items={data}
-        maxDisplayedItems={3}
-        ariaLabel="页面导航"
-        dividerAs={getBreadcrumbItemDivider}
-        onRenderOverflowIcon={getCustomOverflowIcon}
-        overflowAriaLabel="更多链接"
-      />
-      <StyledContent>
-        {children}
-      </StyledContent>
-    </StyledLayout>
+    <FixedTopLayout
+      top={
+        <StyledBreadcrumb
+          items={data}
+          maxDisplayedItems={3}
+          ariaLabel="页面导航"
+          dividerAs={getBreadcrumbItemDivider}
+          onRenderOverflowIcon={getCustomOverflowIcon}
+          overflowAriaLabel="更多链接"
+        />
+      }
+    >
+      {children}
+    </FixedTopLayout>
   )
 }
 

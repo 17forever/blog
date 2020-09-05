@@ -8,7 +8,13 @@ const dropdownStyles: Partial<IDropdownStyles> = {
   dropdown: { width: 300 },
 };
 
-export default function TimeLineLayout(props) {
+interface Iprops {
+  children: JSX.Element[],
+  data: string,
+  value: string
+}
+
+export default function TimeLineLayout(props: Iprops) {
   const { data = [], value: valueFormProps = null, children } = props;
   const [value, setValue] = useState(valueFormProps);
   const options: IDropdownOption[] = data.map((item) => ({
@@ -29,7 +35,7 @@ export default function TimeLineLayout(props) {
   return (
     <>
       <Dropdown
-        placeholder="选择时间"
+        placeholder="选择回去的时间"
         selectedKey={value}
         options={options}
         styles={dropdownStyles}
