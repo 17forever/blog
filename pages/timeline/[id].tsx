@@ -5,7 +5,7 @@ import theme from '../../utils/getTheme'
 import Markdown from '../../components/Markdown'
 import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from 'date-fns'
 import FixedTopLayout from '../../components/Layout/FixedTop'
-import DateSelectInInfoPage from './DateSelectInInfopage'
+import DateSelectInInfoPage from './DateSelectInInfoPage'
 
 const LEFT_WIDTH = 170
 const DAY_SIZE = 20
