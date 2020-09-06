@@ -1,4 +1,4 @@
-import { getFileList, getFileInfo, py } from './common'
+import { getFileList, getFileInfo, py, sortByDate } from './common'
 
 const baseDirection = 'posts'
 
@@ -15,25 +15,31 @@ interface IPostsFileListItem {
 interface IPostsFileListSubItem {
   date: string
   name: string
-  path: string
+  path: string,
+  groupDate: string,
 }
 
 export const getPostsFileList = (): IPostsFileListItem[] => {
-  return getFileList(baseDirection).map(
-    (date: string): IPostsFileListItem => {
-      return {
-        date,
-        list: getFileList(baseDirection, date).map(
-          (name): IPostsFileListSubItem => {
-            return {
-              date,
-              name,
-              path: py(name),
-            }
-          },
-        ),
-      }
-    },
+  return sortByDate(
+    getFileList(baseDirection).map(
+      (date: string): IPostsFileListItem => {
+        return {
+          date,
+          list: sortByDate(
+            getFileList(baseDirection, date).map(
+              (name): IPostsFileListSubItem => {
+                return {
+                  name,
+                  date: parsePostContent(getFileInfo(baseDirection, date, name))?.date || '',
+                  path: py(name),
+                  groupDate: date
+                }
+              },
+            ),
+          ),
+        }
+      },
+    ),
   )
 }
 
@@ -59,12 +65,15 @@ export /**
  * @return {*}  {*}
  */
 const getPostsDateFileList = (date: string): any => {
-  return getFileList(baseDirection, date).map((name) => {
-    return {
-      name,
-      path: py(name),
+  return sortByDate(
+    getFileList(baseDirection, date).map((name) => {
+      return {
+        name,
+        date: parsePostContent(getFileInfo(baseDirection, date, name))?.date || '',
+        path: py(name),
+      }
     }
-  })
+  ))
 }
 
 interface IPostsFileIdListData {
@@ -81,9 +90,9 @@ const getPostsFileIdList = () => {
   const dataList = getPostsFileList()
   let data: IPostsFileIdListData[] = []
   dataList.forEach((dataItem) => {
-    const { list = [] } = dataItem
+    const { list = [], date } = dataItem
     list.forEach((item) => {
-      const { date, path } = item
+      const { path } = item
       data.push({
         params: {
           id: [date, path],
@@ -94,7 +103,7 @@ const getPostsFileIdList = () => {
   return data
 }
 
-export const getPostData = (id: string) => {
+export const getPostData = (id: string[]): any => {
   const [date, _path] = id
   let name = ''
   const dataList = getPostsFileList()
@@ -121,7 +130,8 @@ export const getPostData = (id: string) => {
 }
 
 const parsePostContent = (content: string) => {
-  const [info, body] = content.split('---').filter((i) => !!i)
+  // 不一定有info，但一定有body
+  const [body, info = ''] = content.split('---').filter((i) => !!i).reverse()
   const infoList = info
     .split('\n')
     .map((item) => item.replace(/\s/, ''))

@@ -126,7 +126,7 @@ export default function TimeLineIndex(props) {
             headline="请选择目的地时间"
           >
             <StyledBubbleContent>
-              相传，第一位被传送的勇士因没有设置目的地时间，被传送器从史前第七纪元遍历传送，足足花了五百万光年才回来。此后，为了安全，传送者必须选择目的地时间。
+              相传，有一位勇士因忘记设置目的地时间，被传送器从史前第七纪元遍历传送，足足经历了五百万个文明才回来。此后，为了安全，传送者必须选择目的地时间。
             </StyledBubbleContent>
           </TeachingBubbleContent>
         </Coachmark>

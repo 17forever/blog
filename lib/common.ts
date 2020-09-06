@@ -1,6 +1,7 @@
 import fs from 'fs'
 import path from 'path'
 import pinyin from 'pinyin'
+import { isBefore } from 'date-fns'
 
 export const py = (name: string): string =>
   pinyin(name, {
@@ -18,4 +19,8 @@ export const getFileList = (...filePath: string[]) =>
 
 export const getFilePath = (filePath: string) => getFileList(filePath).map((name) => py(name)) || []
 
-export const getFileInfo = (...filePath: string[]): string => fs.readFileSync(addExtension(path.join(dataDirectory, ...filePath)), 'utf-8') || ''
+export const getFileInfo = (...filePath: string[]): string =>
+  fs.readFileSync(addExtension(path.join(dataDirectory, ...filePath)), 'utf-8') || ''
+
+export const sortByDate = (list: any[]): any[] =>
+  list.sort((prev, next) => (isBefore(new Date(prev?.date), new Date(next?.date)) ? 1 : -1))
