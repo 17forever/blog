@@ -13,7 +13,7 @@ const StyledMenuLabel = styled.div`
 `
 
 const MenuLabel = ({ name, icon }) => (
-  <StyledMenuLabel>
+  <StyledMenuLabel title={name}>
     <IconFont icon={icon} />
     {name}
   </StyledMenuLabel>

@@ -13,7 +13,7 @@ const StyledWrap = styled.div`
 
 export default function TofuIndex() {
   return (
-    <FixedTopLayout center>
+    <FixedTopLayout center top='Coming soon...'>
       <StyledWrap>
         <MopanSvg />
         磨豆子中...

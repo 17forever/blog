@@ -37,9 +37,11 @@ const StyledDropdown = styled(Dropdown)`
 
 const StyledButton = styled(PrimaryButton)`
   height: 50px;
-  font-size: 20px;
   margin-left: 20px;
-  letter-spacing: 2px;
+  .ms-Button-label {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
 `
 const StyledBubbleContent = styled.p`
   line-height: 1.6;
