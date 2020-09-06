@@ -1,10 +1,20 @@
 import styled from 'styled-components'
 
+const iconFontStyles = `
+  .iconfont {
+      width: 1em; height: 1em;
+      vertical-align: -0.15em;
+      fill: currentColor;
+      overflow: hidden;
+  }
+`
+
 export const StyledLayout = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
+  ${iconFontStyles};
 `
 export const StyledLayoutLeft = styled.div`
   width: 200px;
@@ -18,10 +28,12 @@ export const StyledLayoutLeft = styled.div`
 
 export const StyledLayoutRight = styled.div`
   flex: 1;
-  height: calc(100% - 20px);
-  overflow-x: hidden;
-  overflow-y: auto;
-  padding: 20px 0 0 20px;
+  /* height: calc(100% - 20px); */
+  overflow: hidden;
+  /* padding: 20px 0 0 20px; */
+  & > * {
+    padding: 20px 0 20px 20px;
+  }
 `
 
 export const StyledLogoWrap = styled.div`
@@ -32,13 +44,9 @@ export const StyledLogoWrap = styled.div`
   height: 71px;
 `
 
-export const Logo = styled.div`
+export const Logo = styled.div``
 
-`
-
-export const LeftTop = styled.div`
-
-`
+export const LeftTop = styled.div``
 export const LeftBottom = styled.div`
   margin: 20px;
   text-align: center;

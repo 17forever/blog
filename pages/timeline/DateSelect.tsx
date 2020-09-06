@@ -115,7 +115,7 @@ export default function TimeLineIndex(props) {
           ariaLabelledBy="coachmark-label1"
           ariaDescribedByText="Press enter or alt + C to open the coachmark notification"
           ariaLabelledByText="Coachmark notification"
-          delayBeforeMouseOpen={1000}
+          delayBeforeMouseOpen={2000}
         >
           <TeachingBubbleContent
             hasCloseButton

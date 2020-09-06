@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
+import cx from 'classnames'
 
 const StyledLayout = styled.div`
   height: 100%;
@@ -16,13 +17,24 @@ const StyledTop = styled.div`
 const StyledBottom = styled.div`
   height: calc(100% - 50px);
   overflow: auto;
+  &.center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
 `
 export default function FixedTop(props) {
-  const { top, children } = props
+  const { top, center, children } = props
   return (
     <StyledLayout>
       <StyledTop>{top}</StyledTop>
-      <StyledBottom>{children}</StyledBottom>
+      <StyledBottom
+        className={cx({
+          center,
+        })}
+      >
+        {children}
+      </StyledBottom>
     </StyledLayout>
   )
 }

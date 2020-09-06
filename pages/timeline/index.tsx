@@ -13,7 +13,7 @@ const Dropdown = dynamic(
   () => {
     return import('./DateSelect')
   },
-  { ssr: false },
+  // { ssr: false },
 )
 
 const StyledLayout = styled.div`
