@@ -1,5 +1,6 @@
 import { getFileList, getFileInfo, py } from './common'
 import { extract } from '@node-rs/jieba'
+import times from '../utils/times'
 
 const baseDirection = 'timeline'
 
@@ -13,8 +14,17 @@ export const getTimelineFileList = () => {
   })
 }
 
-export const getTimelineFileListWithHotWords = () => {
-  return getFileList(baseDirection).map((id) => {
+interface IItem {
+  id: string,
+  words: IWordsItem[]
+}
+interface IWordsItem {
+  word: string,
+  weight: number
+}
+
+export const getTimelineFileListWithHotWords = (): IItem[] => {
+  return getFileList(baseDirection).map((id: string): IItem => {
     // console.log(getTimelineData(id))
     const analyzeText = getTimelineData(id).data.reduce((prev, next): string => {
       prev += `${next?.mood || ''} ${next?.body || ''}`
@@ -23,9 +33,12 @@ export const getTimelineFileListWithHotWords = () => {
     // console.log(analyzeText)
     return {
       id,
-      words: extract(analyzeText, 10)
-        .map((word) => word.keyword)
-        .filter((i) => !!i.replace(/\s/g, '')),
+      words: extract(analyzeText, times.myAge)
+        .map((item): IWordsItem  => ({
+          word: item.keyword,
+          weight: Number(item.weight.toFixed(2))
+        }))
+        .filter((i) => !!i.word.replace(/\s/g, '')),
     }
   })
 }
