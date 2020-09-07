@@ -9,12 +9,25 @@ const iconFontStyles = `
   }
 `
 
+const commonStyles = `
+  .center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .full {
+    width: 100%;
+    height: 100%;
+  }
+`
+
 export const StyledLayout = styled.div`
   display: flex;
   width: 100vw;
   height: 100vh;
   overflow: hidden;
   ${iconFontStyles};
+  ${commonStyles};
 `
 export const StyledLayoutLeft = styled.div`
   width: 200px;

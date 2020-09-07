@@ -2,12 +2,15 @@ import { useEffect } from 'react';
 import { useRouter } from 'next/router';
 
 const Index = () => {
-  console.log('in')
   const router = useRouter();
   useEffect(() => {
     router.replace('/timeline');
   }, []);
-  return null;
+  return (
+    <div className='center full'>
+      努力跳转中...
+    </div>
+  );
 };
 
 export default Index;

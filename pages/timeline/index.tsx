@@ -8,6 +8,7 @@ import WordCloud from './WordCloud'
 import times from '../../utils/times'
 import dynamic from 'next/dynamic'
 import GearLoading from '../../components/Loading/timeline_gear'
+import { Spinner, SpinnerSize } from '@fluentui/react'
 
 // Coachmark 无法在服务端渲染
 const Dropdown = dynamic(
@@ -18,6 +19,7 @@ const Dropdown = dynamic(
         <GearLoading />
         传送器部署中
       </StyledGearLoading>
+      // <Spinner label="传送器部署中" size={SpinnerSize.large}  />
     ),
   },
 )
