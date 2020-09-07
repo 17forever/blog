@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import FixedTopLayout from '../../components/Layout/FixedTop'
-import MopanSvg from './mopan'
+import MopanSvg from '../../components/Loading/tofu_mopan'
 import styled from 'styled-components'
 
 const StyledWrap = styled.div`
@@ -16,7 +16,7 @@ export default function TofuIndex() {
     <FixedTopLayout center top='Coming soon...'>
       <StyledWrap>
         <MopanSvg />
-        磨豆子中...
+        磨豆子中
       </StyledWrap>
     </FixedTopLayout>
   )

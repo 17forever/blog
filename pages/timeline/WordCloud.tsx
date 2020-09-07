@@ -91,7 +91,7 @@ export default function TimeLineWordCloud(props) {
           style={{
             color: colorList[random(0, colorList.length)],
             fontSize: getFontSize(item?.weight, weightMin),
-            fontFamily: 'fangsong, system-ui',
+            fontFamily: 'fangsong, serif, system-ui',
             padding: 10,
             fontWeight: 'bold',
             opacity: getOpacity(item?.weight),
