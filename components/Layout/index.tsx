@@ -23,12 +23,12 @@ export default function Layout(props) {
         <LeftTop>
           <StyledLogoWrap>
             <Logo>
-              <Link href="https://github.com/7inFen" target="_blank">
+              {/* <Link href="https://github.com/7inFen" target="_blank">
                 7inFen
-              </Link>
-              <Text style={{ padding: '0 2px' }}>/</Text>
-              <Link href={`${basePath}`} style={{ fontSize: 20 }}>
-                Blog
+              </Link> */}
+              {/* <Text style={{ padding: '0 2px' }}>/</Text> */}
+              <Link href={`${basePath || '/'}`} style={{ fontSize: 20 }}>
+                17 Forever
               </Link>
             </Logo>
           </StyledLogoWrap>

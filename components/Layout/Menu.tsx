@@ -26,7 +26,7 @@ const navLinkGroups: INavLinkGroup[] = [
     links: [
       // {
       //   name: 'Home',
-      //   url: '/blog/',
+      //   url: '/',
       //   key: 'key0',
       //   isExpanded: true,
       // },

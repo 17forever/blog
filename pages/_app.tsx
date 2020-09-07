@@ -13,7 +13,7 @@ function App({ Component, pageProps }) {
   return (
     <>
       <Helmet>
-        <title>7inFen/Blog</title>
+        <title>17 Forever</title>
       </Helmet>
       <Layout>
         <Component {...pageProps} />
