@@ -136,7 +136,7 @@ export default function Timeline(props: IProps) {
         {dataList.map((item, idx) => {
           const { date, body, intervalDaysOfPrevOrEnd, ...rest } = item
           return (
-            <StyledItemBlock key={date} size={idx === 0 ? 2 : intervalDaysOfPrevOrEnd}>
+            <StyledItemBlock key={`${date} || ${idx}`} size={idx === 0 ? 2 : intervalDaysOfPrevOrEnd || 1}>
               <StyledItemLeft>
                 <div>
                   <span className="top">{date}</span>

@@ -71,9 +71,17 @@ const parseTimelineContent = (content: string): IContentData[] => {
       (item: string): IContentData => {
         const text = item.trim()
         const match = text.match(/^(?<date>\S+)\s+(?<weather>\S+)\s+(?<mood>\S*)\s*\n+/)
+        // console.log(match, text)
         if (match) {
+          const groups = match?.groups || {}
           return {
-            ...match.groups,
+            ...Object.keys(groups).filter(key => !!groups[key]).reduce(
+              (prev, next) => {
+                prev[next] = groups[next]
+                return prev
+              },
+              {}
+            ),
             body: text.replace(match[0], ''),
           }
         }
