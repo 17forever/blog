@@ -74,7 +74,7 @@ export default function TimeLineIndex(props) {
         setFlyButtonText('确认目的地')
       }, 0)
       setTimeout(() => {
-        setFlyButtonText('进入传送器')
+        setFlyButtonText('传送器启动')
       }, 500)
       setTimeout(() => {
         setFlyButtonText('传送中...')

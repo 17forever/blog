@@ -71,8 +71,8 @@ const parseTimelineContent = (content: string): IContentData[] => {
       (item: string): IContentData => {
         const text = item.trim()
         // \u0020 为空格
-        const match = text.match(/^(?<date>\S+)\u0020+(?<weather>\S+)\u0020+(?<mood>\S*)\s*\n+/)
-        console.log(match, text)
+        const match = text.match(/^(?<date>\S+)\u0020+(?<weather>\S+)\u0020*(?<mood>\S*)\s*\n+/)
+        // console.log(match, text)
         if (match) {
           const groups = match?.groups || {}
           return {
