@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Panel, DefaultButton } from '@fluentui/react'
 
 const iconFontStyles = `
   .iconfont {
@@ -69,4 +70,27 @@ export const Divider = styled.div`
   width: 100%;
   height: 1px;
   background: #eee;
+`
+
+export const StyledPanel = styled(Panel)`
+  ${iconFontStyles};
+  .ms-Panel-scrollableContent {
+    height: 100%;
+    .ms-Panel-content {
+      padding: 0;
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+  }
+`
+export const StyledMenuToggle = styled(DefaultButton)`
+  min-width: unset;
+  width: 30px;
+  height: 30px;
+  position: fixed;
+  z-index: 2;
+  left: 30px;
+  bottom: 50px;
 `

@@ -1,7 +1,9 @@
+import React, { useState, useEffect } from 'react'
 import Layout from '../components/Layout/index'
 import Helmet from 'react-helmet'
-import 'normalize.css'
+import { Context as ResponsiveContext } from 'react-responsive'
 import { initializeIcons } from '@uifabric/icons'
+import 'normalize.css'
 import logTheme from '../utils/logTheme'
 import 'highlight.js/styles/vs.css'
 
@@ -10,15 +12,21 @@ logTheme()
 
 // @ts-ignore
 function App({ Component, pageProps }) {
+  const [viewportWidth, setViewportWidth] = useState(0)
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      setViewportWidth(window?.screen?.availWidth)
+    }
+  }, [])
   return (
-    <>
+    <ResponsiveContext.Provider value={{ width: viewportWidth }}>
       <Helmet>
         <title>17 Forever</title>
       </Helmet>
       <Layout>
         <Component {...pageProps} />
       </Layout>
-    </>
+    </ResponsiveContext.Provider>
   )
 }
 
