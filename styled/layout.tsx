@@ -43,6 +43,7 @@ export const StyledLayoutLeft = styled.div`
 export const StyledLayoutRight = styled.div`
   flex: 1;
   padding: 20px;
+  overflow-y: auto;
 `
 
 export const StyledLogoWrap = styled.div`

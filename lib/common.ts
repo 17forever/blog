@@ -4,7 +4,7 @@ import pinyin from 'pinyin'
 import { isBefore } from 'date-fns'
 
 export const py = (name: string): string =>
-  pinyin(name, {
+  pinyin(name.trim().replace(/\s/g, '-'), {
     style: pinyin.STYLE_NORMAL,
   })
     .flat()
