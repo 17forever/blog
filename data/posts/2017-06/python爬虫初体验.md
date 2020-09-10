@@ -63,11 +63,12 @@ print('ok')
 
 ```
 
-其中，
-1，download 函数中注释的部分为自定义用户代理，默认为 Python-urllib/版本号
-2，`BeautifulSoup`和`lxml.html.fromstring`均有将不规范的 html 代码补充完善的功能
-3，lxml 可使用类似于 css 选择器的功能操作 DOM，但是需要单独安装`cssselect`这个模块
-4，与 css 选择器不同的是，选择 id 仍需要数组下标[0]唯一指定
-5，lxml 的性能比 BeautifulSoup 快得多
-6，csv 的 writerow 参数为可迭代参数，为数组则迭代数组项，为字符串则迭代字符串每一项
-7，不要忘记`newline=""`，可防止出现写入到文件中的隔行空白。
+其中
+
+1. download 函数中注释的部分为自定义用户代理，默认为 Python-urllib/版本号
+2. `BeautifulSoup`和`lxml.html.fromstring`均有将不规范的 html 代码补充完善的功能
+3. lxml 可使用类似于 css 选择器的功能操作 DOM，但是需要单独安装`cssselect`这个模块
+4. 与 css 选择器不同的是，选择 id 仍需要数组下标[0]唯一指定
+5. lxml 的性能比 BeautifulSoup 快得多
+6. csv 的 writerow 参数为可迭代参数，为数组则迭代数组项，为字符串则迭代字符串每一项
+7. 不要忘记`newline=""`，可防止出现写入到文件中的隔行空白。
