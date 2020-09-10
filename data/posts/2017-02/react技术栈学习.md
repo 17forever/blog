@@ -1,5 +1,6 @@
 ---
 date: 2017-02-27
+outdate
 ---
 
 公司后面的项目会用到 react，这段时间从头学习 react 技术栈，给自己的规划是 react => react router => react redux => react native，目前刚接触到 redux，看的人一脸懵逼，很是憔悴。记录一下这段时间的学习。

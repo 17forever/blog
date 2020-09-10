@@ -20,9 +20,7 @@ const LeftComponent = () => {
       <LeftTop>
         <StyledLogoWrap>
           <Logo>
-            <Link href={`${basePath || '/'}`} style={{ fontSize: 20 }}>
-              17 Forever
-            </Link>
+            <Link href={`${basePath || '/'}`}>17 Forever</Link>
           </Logo>
         </StyledLogoWrap>
         <Divider />

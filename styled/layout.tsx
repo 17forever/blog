@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { Panel, DefaultButton } from '@fluentui/react'
+import theme from '../utils/getTheme'
 
 const iconFontStyles = `
   .iconfont {
@@ -54,7 +55,15 @@ export const StyledLogoWrap = styled.div`
   height: 71px;
 `
 
-export const Logo = styled.div``
+console.log(theme)
+export const Logo = styled.div`
+  a {
+    color: ${theme.palette.themePrimary};
+    font-size: 17px;
+    font-weight: 700;
+    font-family: Monaco, Consolas, 'Courier New', '微软雅黑', monospace;
+  }
+`
 
 export const LeftTop = styled.div``
 export const LeftBottom = styled.div`

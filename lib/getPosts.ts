@@ -15,8 +15,8 @@ interface IPostsFileListItem {
 interface IPostsFileListSubItem {
   date: string
   name: string
-  path: string,
-  groupDate: string,
+  path: string
+  groupDate: string
 }
 
 export const getPostsFileList = (): IPostsFileListItem[] => {
@@ -32,7 +32,7 @@ export const getPostsFileList = (): IPostsFileListItem[] => {
                   name,
                   date: parsePostContent(getFileInfo(baseDirection, date, name))?.date || '',
                   path: py(name),
-                  groupDate: date
+                  groupDate: date,
                 }
               },
             ),
@@ -72,8 +72,8 @@ const getPostsDateFileList = (date: string): any => {
         date: parsePostContent(getFileInfo(baseDirection, date, name))?.date || '',
         path: py(name),
       }
-    }
-  ))
+    }),
+  )
 }
 
 interface IPostsFileIdListData {
@@ -131,7 +131,10 @@ export const getPostData = (id: string[]): any => {
 
 const parsePostContent = (content: string) => {
   // 不一定有info，但一定有body
-  const [body, info = ''] = content.split('---').filter((i) => !!i).reverse()
+  const [body, info = ''] = content
+    .split('---')
+    .filter((i) => !!i)
+    .reverse()
   const infoList = info
     .split('\n')
     .map((item) => item.replace(/\s/, ''))
@@ -140,7 +143,7 @@ const parsePostContent = (content: string) => {
     ...infoList.reduce((prev: object, next: string) => {
       const [key, value] = next.split(':')
       // TODO
-      prev[key?.trim()] = value?.trim()
+      prev[key?.trim()] = value?.trim() || ''
       return prev
     }, {}),
     body: body.trim(),
