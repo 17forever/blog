@@ -6,6 +6,9 @@ import styled from 'styled-components'
 import Link from '../../components/Link'
 
 const StyledList = styled.ul`
+  margin: 30px;
+  padding: 0;
+  list-style-type: none;
   li {
     margin: 10px 0;
   }

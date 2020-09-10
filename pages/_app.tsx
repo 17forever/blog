@@ -1,23 +1,26 @@
 import React, { useState, useEffect } from 'react'
-import Layout from '../components/Layout/index'
 import Helmet from 'react-helmet'
 import { Context as ResponsiveContext } from 'react-responsive'
 import { initializeIcons } from '@uifabric/icons'
 import 'normalize.css'
 import logTheme from '../utils/logTheme'
 import 'highlight.js/styles/vs.css'
+import Layout from '../components/Layout/index'
 
 initializeIcons()
 logTheme()
 
 // @ts-ignore
 function App({ Component, pageProps }) {
-  const [viewportWidth, setViewportWidth] = useState(0)
+  const [viewportWidth, setViewportWidth] = useState(1920)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       setViewportWidth(window?.screen?.availWidth)
     }
   }, [])
+
+  // TODO page resize event
+
   return (
     <ResponsiveContext.Provider value={{ width: viewportWidth }}>
       <Helmet>

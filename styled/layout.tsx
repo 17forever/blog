@@ -42,12 +42,7 @@ export const StyledLayoutLeft = styled.div`
 
 export const StyledLayoutRight = styled.div`
   flex: 1;
-  /* height: calc(100% - 20px); */
-  overflow: hidden;
-  /* padding: 20px 0 0 20px; */
-  & > * {
-    padding: 20px 0 20px 20px;
-  }
+  padding: 20px;
 `
 
 export const StyledLogoWrap = styled.div`
