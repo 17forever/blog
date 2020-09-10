@@ -55,7 +55,6 @@ export const StyledLogoWrap = styled.div`
   height: 71px;
 `
 
-console.log(theme)
 export const Logo = styled.div`
   a {
     color: ${theme.palette.themePrimary};

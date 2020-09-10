@@ -39,7 +39,7 @@ const StyledMessageBar = styled(MessageBar)`
   }
 `
 
-const OUTDATE_TEXT = '文中涉及的技术可能已过时，甚至无法正常运行，请参考其官网最新文档。'
+const OUTDATE_TEXT = '文中涉及的技术可能已经过时，甚至无法正常运行，请参考其官网最新文档。'
 export default function PostInfo(props) {
   const {
     name,
