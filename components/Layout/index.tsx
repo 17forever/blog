@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Default, { Mobile } from '../Responsive'
-import LayoutDefault from './LayutDefault'
+import LayoutDefault from './LayoutDefault'
 import LayoutMobile from './LayoutMobile'
 
 const LayoutIndex = ({ children }) => {

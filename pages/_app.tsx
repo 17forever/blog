@@ -15,7 +15,7 @@ function App({ Component, pageProps }) {
   const [viewportWidth, setViewportWidth] = useState(1920)
   useEffect(() => {
     if (typeof window !== 'undefined') {
-      setViewportWidth(window?.screen?.availWidth)
+      setViewportWidth(window?.screen?.availWidth || viewportWidth)
     }
   }, [])
 
