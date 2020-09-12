@@ -42,7 +42,8 @@ export const contentStyles = `
       text-decoration: underline;
     }
     &:visited {
-      color: ${theme.palette.neutralTertiary};
+      // color: ${theme.palette.neutralTertiary};
+      color: ${theme.palette.neutralPrimary};
     }
   }
 `

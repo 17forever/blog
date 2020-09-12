@@ -126,7 +126,7 @@ export default function PostsLayout(props) {
   )
 
   const getMenuItems = (data) => {
-    console.log(data)
+    // console.log(data)
     if (data.length === 1) {
       const { date, list } = data[0]
       return list.map((listItem) => {
