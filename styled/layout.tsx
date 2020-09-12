@@ -1,27 +1,6 @@
 import styled from 'styled-components'
-import { Panel, DefaultButton } from '@fluentui/react'
 import theme from '../utils/getTheme'
-
-const iconFontStyles = `
-  .iconfont {
-      width: 1em; height: 1em;
-      vertical-align: -0.15em;
-      fill: currentColor;
-      overflow: hidden;
-  }
-`
-
-const commonStyles = `
-  .center {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .full {
-    width: 100%;
-    height: 100%;
-  }
-`
+import { commonStyles, iconFontStyles, contentStyles } from './common'
 
 export const StyledLayout = styled.div`
   display: flex;
@@ -42,9 +21,11 @@ export const StyledLayoutLeft = styled.div`
 `
 
 export const StyledLayoutRight = styled.div`
+  ${contentStyles};
   flex: 1;
   padding: 20px;
   overflow-y: auto;
+  position: relative;
 `
 
 export const StyledLogoWrap = styled.div`
@@ -74,27 +55,4 @@ export const Divider = styled.div`
   width: 100%;
   height: 1px;
   background: #eee;
-`
-
-export const StyledPanel = styled(Panel)`
-  ${iconFontStyles};
-  .ms-Panel-scrollableContent {
-    height: 100%;
-    .ms-Panel-content {
-      padding: 0;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-  }
-`
-export const StyledMenuToggle = styled(DefaultButton)`
-  min-width: unset;
-  width: 30px;
-  height: 30px;
-  position: fixed;
-  z-index: 2;
-  left: 30px;
-  bottom: 50px;
 `

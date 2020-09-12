@@ -8,39 +8,52 @@ import TagCloud from 'react-tag-cloud'
 import styled from 'styled-components'
 import WordCloud from './WordCloud'
 import times from '../../utils/times'
+import { isMobile as checkIsMobile } from '../../components/Responsive'
+import cx from 'classnames'
 
 const StyledLayout = styled.div`
   display: flex;
+  &.mobile {
+    flex-direction: column;
+    align-items: center;
+  }
 `
 
 const StyledDropdown = styled(Dropdown)`
   width: 500px;
   .ms-Dropdown {
     .ms-Dropdown-title {
-      height: 50px;
+      height: 45px;
       display: flex;
       align-items: center;
-      font-size: 20px;
-      padding-left: 20px;
+      font-size: 17px;
+      padding-left: 17px;
     }
     .ms-Dropdown-caretDownWrapper {
-      height: 50px;
+      height: 45px;
       display: flex;
       align-items: center;
       padding-right: 10px;
       .ms-Dropdown-caretDown {
-        font-size: 16px;
+        font-size: 17px;
       }
     }
+  }
+  &.mobile {
+    width: 80vw;
   }
 `
 
 const StyledButton = styled(PrimaryButton)`
-  height: 50px;
-  margin-left: 20px;
+  height: 45px;
+  margin-left: 17px;
   .ms-Button-label {
-    font-size: 20px;
+    font-size: 17px;
     letter-spacing: 2px;
+  }
+  &.mobile {
+    margin: 50px 0 0 0;
+    width: 170px;
   }
 `
 const StyledBubbleContent = styled.p`
@@ -93,8 +106,13 @@ export default function TimeLineIndex(props) {
   }
 
   const target = useRef()
+  const mobile = checkIsMobile()
   return (
-    <StyledLayout>
+    <StyledLayout
+      className={cx({
+        mobile,
+      })}
+    >
       <div ref={target}>
         <StyledDropdown
           placeholder="选择时间"
@@ -102,14 +120,25 @@ export default function TimeLineIndex(props) {
           options={options}
           onChange={handleChange}
           disabled={flyButtonText !== '出发'}
+          className={cx({
+            mobile,
+          })}
         />
       </div>
-      <StyledButton text={flyButtonText} onClick={handleFly} disabled={flyButtonText !== '出发'} />
+      <StyledButton
+        text={flyButtonText}
+        onClick={handleFly}
+        disabled={flyButtonText !== '出发'}
+        className={cx({
+          mobile,
+        })}
+      />
       {showCoachmark && (
         <Coachmark
           target={target.current}
           positioningContainerProps={{
-            directionalHint: 9,
+            // directionalHint: 9,
+            directionalHint: mobile ? 5 : 9,
             doNotLayer: false,
           }}
           ariaAlertText="A coachmark has appeared"

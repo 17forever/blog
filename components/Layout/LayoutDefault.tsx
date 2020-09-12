@@ -13,8 +13,9 @@ import {
 import Menu from './Menu'
 import { Link } from '@fluentui/react'
 import { basePath } from '../../next.config'
+import BackTop, { BackTopAnchor } from '../BackTop'
 
-const LeftComponent = () => {
+export const LeftComponent = () => {
   return (
     <>
       <LeftTop>
@@ -43,7 +44,11 @@ export default function Layout(props) {
       <StyledLayoutLeft>
         <LeftComponent />
       </StyledLayoutLeft>
-      <StyledLayoutRight>{children}</StyledLayoutRight>
+      <StyledLayoutRight>
+        <BackTopAnchor />
+        {children}
+      </StyledLayoutRight>
+      <BackTop />
     </StyledLayout>
   )
 }

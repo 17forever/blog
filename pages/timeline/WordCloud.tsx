@@ -4,6 +4,7 @@ import PropTypes from 'prop-types'
 import TagCloud from 'react-tag-cloud'
 import styled from 'styled-components'
 import theme from '../../utils/getTheme'
+import { isMobile } from '../../components/Responsive'
 
 const {
   themeDark,
@@ -60,9 +61,6 @@ function random(min, max) {
 }
 
 const MIN_FONT_SIZE = 20
-const getFontSize = (weight: number, weightMin: number): number => {
-  return MIN_FONT_SIZE + (weight / weightMin) * 10
-}
 
 const MIN_OPACITY = 0.7
 
@@ -75,7 +73,11 @@ export default function TimeLineWordCloud(props) {
 
   const weightRate = (weight) => weight / weightAll
   const getOpacity = (weight) => MIN_OPACITY + weightRate(weight) * 2
+  const getFontSize = (weight: number, weightMin: number, fontSizeWeight: number): number => {
+    return MIN_FONT_SIZE + (weight / weightMin) * fontSizeWeight
+  }
 
+  const fontSizeWeight = isMobile() ? 0 : 10
   return (
     <TagCloud
       style={{
@@ -90,7 +92,7 @@ export default function TimeLineWordCloud(props) {
           opacity={getOpacity(item.weight)}
           style={{
             color: colorList[random(0, colorList.length)],
-            fontSize: getFontSize(item?.weight, weightMin),
+            fontSize: getFontSize(item?.weight, weightMin, fontSizeWeight),
             fontFamily: 'fangsong, serif, system-ui',
             padding: 10,
             fontWeight: 'bold',

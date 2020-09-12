@@ -1,42 +1,17 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
 import {
-  StyledLayout,
-  StyledLayoutRight,
-  Logo,
-  LeftTop,
-  LeftBottom,
-  StyledLogoWrap,
-  Divider,
   StyledPanel,
   StyledMenuToggle,
-} from '../../styled/layout'
-import Menu from './Menu'
-import { Link, PanelType } from '@fluentui/react'
-import { basePath } from '../../next.config'
-
-const LeftComponent = () => {
-  return (
-    <>
-      <LeftTop>
-        <StyledLogoWrap>
-          <Logo>
-            <Link href={`${basePath || '/'}`} style={{ fontSize: 20 }}>
-              17 Forever
-            </Link>
-          </Logo>
-        </StyledLogoWrap>
-        <Divider />
-        <Menu />
-      </LeftTop>
-      <LeftBottom>
-        <Link href="https://github.com/7inFen/blog/actions" target="_blank">
-          <img src="https://github.com/7inFen/blog/workflows/CI/badge.svg" />
-        </Link>
-      </LeftBottom>
-    </>
-  )
-}
+  StyledMobileLayout,
+  StyledMobileTopBanner,
+  StyledMobileContent,
+  StyledMobileFooter,
+} from '../../styled/mobile'
+import { PanelType } from '@fluentui/react'
+import { LeftComponent } from './LayoutDefault'
+import { useRouter } from 'next/router'
+import BackTop, { BackTopAnchor } from '../BackTop'
 
 // @ts-ignore
 export default function Layout(props) {
@@ -45,8 +20,12 @@ export default function Layout(props) {
   const togglePanelVisible = () => {
     setPanelVisible(!panelVisible)
   }
+
+  const router = useRouter()
+  const hideTopBannerBorder = ['/timeline'].includes(router.pathname)
   return (
-    <StyledLayout>
+    <StyledMobileLayout>
+      <BackTopAnchor />
       <StyledPanel
         isOpen={panelVisible}
         isLightDismiss
@@ -57,17 +36,20 @@ export default function Layout(props) {
       >
         <LeftComponent />
       </StyledPanel>
-      <StyledMenuToggle
-        primary
-        iconProps={{
-          iconName: 'CollapseMenu',
-        }}
-        title="打开导航"
-        ariaLabel="打开导航"
-        onClick={togglePanelVisible}
-      />
-      <StyledLayoutRight>{children}</StyledLayoutRight>
-    </StyledLayout>
+      <StyledMobileTopBanner hideBorder={hideTopBannerBorder}>
+        <StyledMenuToggle
+          iconProps={{
+            iconName: 'CollapseMenu',
+          }}
+          title="打开导航"
+          ariaLabel="打开导航"
+          onClick={togglePanelVisible}
+        />
+      </StyledMobileTopBanner>
+      <StyledMobileContent>{children}</StyledMobileContent>
+      <StyledMobileFooter />
+      <BackTop />
+    </StyledMobileLayout>
   )
 }
 

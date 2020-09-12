@@ -6,9 +6,10 @@ import { MessageBar, MessageBarType } from '@fluentui/react'
 import Layout from './layout'
 import theme from '../../utils/getTheme'
 import styled from 'styled-components'
+import { isMobile as checkIsMobile } from '../../components/Responsive'
 
 const StyledContent = styled.div`
-  padding: 30px;
+  padding: ${({ isMobile }) => (isMobile ? '20px' : '40px')};
 `
 const StyledInfo = styled.div`
   color: ${theme.palette.neutralTertiary};
@@ -22,9 +23,8 @@ const StyledInfoItem = styled.span`
 `
 
 const StyledMessageBar = styled(MessageBar)`
-  margin: 20px 10px 0 20px;
   max-width: 600px;
-  max-height: 30px;
+  margin-top: 20px;
   .ms-MessageBar-icon {
     display: flex;
     align-items: center;
@@ -46,9 +46,10 @@ export default function PostInfo(props) {
     data: { body, outdate, ...restProps },
   } = props
   const [showMessage, setShowMessage] = useState(outdate !== undefined)
+  const isMobile = checkIsMobile()
   return (
     <Layout current={name}>
-      <StyledContent>
+      <StyledContent isMobile={isMobile}>
         <StyledInfo>
           {Object.keys({ ...restProps }).map((key) => (
             <StyledInfoItem key={key}>{restProps[key]}</StyledInfoItem>
@@ -57,7 +58,7 @@ export default function PostInfo(props) {
         {showMessage && (
           <StyledMessageBar
             messageBarType={MessageBarType.warning}
-            isMultiline={false}
+            isMultiline={isMobile}
             // truncated
             onDismiss={() => {
               setShowMessage(false)

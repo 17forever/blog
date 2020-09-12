@@ -3,32 +3,41 @@ import PropTypes from 'prop-types'
 import { getPostsDateList, getPostsDateFileList } from '../../lib/getPosts'
 import Layout from './layout'
 import styled from 'styled-components'
-import Link from '../../components/Link'
+import GroupList from './GroupList'
+import { format } from 'date-fns'
+import { isMobile } from '../../components/Responsive'
 
-const StyledList = styled.ul`
-  margin: 30px;
-  padding: 0;
-  list-style-type: none;
-  li {
-    margin: 10px 0;
-  }
+const StyledContent = styled.div`
+  padding: ${({ isMobile }) => (isMobile ? '20px' : '40px 50px')};
 `
 
 export default function PostsDate(props) {
   const { date, data } = props
+  const dateMap = {}
+  const dataList = data.map((item) => ({
+    ...item,
+    groupDate: date,
+  }))
+  dataList.forEach((item, idx) => {
+    const itemDate = format(new Date(item.date || date), 'MM-dd')
+    const itemData = dateMap[itemDate] || {}
+    dateMap[itemDate] = {
+      startIndex: itemData.startIndex ?? idx,
+      list: (itemData?.list || []).concat(item),
+    }
+  })
+  const groups = Object.keys(dateMap).map((date) => ({
+    count: dateMap[date]?.list?.length || 0,
+    key: date,
+    name: date,
+    startIndex: dateMap[date]?.startIndex,
+  }))
+
   return (
     <Layout>
-      <StyledList>
-        {data.map(
-          (item: string): JSX.Element => (
-            <li key={item.name}>
-              <Link href="/posts/[...id]" as={`/posts/${date}/${item.path}`}>
-                {item.name}
-              </Link>
-            </li>
-          ),
-        )}
-      </StyledList>
+      <StyledContent isMobile={isMobile()}>
+        <GroupList items={dataList} groups={groups} labelLink={false} />
+      </StyledContent>
     </Layout>
   )
 }

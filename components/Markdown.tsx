@@ -8,6 +8,7 @@ import mila from 'markdown-it-link-attributes'
 import markdownItAttrs from 'markdown-it-attrs'
 
 const StyledMarkdown = styled.div`
+  /* font-size: 14px; */
   p {
     color: ${theme.palette.neutralDark};
     line-height: 1.7;
@@ -20,12 +21,7 @@ const StyledMarkdown = styled.div`
     min-width: 200px;
     /* max-width: 980px; */
     margin: 0 auto;
-    padding: 20px;
-  }
-  @media (max-width: 767px) {
-    & {
-      padding: 15px;
-    }
+    padding: 20px 0;
   }
 `
 

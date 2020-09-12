@@ -6,12 +6,15 @@ import Markdown from '../../components/Markdown'
 import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from 'date-fns'
 import FixedTopLayout from '../../components/Layout/FixedTop'
 import DateSelectInInfoPage from './DateSelectInInfoPage'
+import { isMobile as cheeckIsMobile } from '../../components/Responsive'
+import cx from 'classnames'
 
 const LEFT_WIDTH = 170
+const LEFT_WIDTH_MOBILE = 100
 const DAY_SIZE = 20
 
 const StyledBlockWrap = styled.div`
-  margin: 50px;
+  margin: ${({ isMobile }) => (isMobile ? 20 : 50)}px;
   position: relative;
   &:before {
     content: '';
@@ -20,7 +23,7 @@ const StyledBlockWrap = styled.div`
     height: 100%;
     background: ${theme.palette.neutralQuaternary};
     position: absolute;
-    left: ${LEFT_WIDTH}px;
+    left: ${({ isMobile }) => (isMobile ? LEFT_WIDTH_MOBILE : LEFT_WIDTH)}px;
   }
   &:after {
     content: '';
@@ -29,7 +32,7 @@ const StyledBlockWrap = styled.div`
     height: 1px;
     background: ${theme.palette.neutralQuaternary};
     position: absolute;
-    left: ${LEFT_WIDTH - 5}px;
+    left: ${({ isMobile }) => (isMobile ? LEFT_WIDTH_MOBILE - 5 : LEFT_WIDTH - 5)}px;
     bottom: 0;
   }
 `
@@ -38,7 +41,7 @@ const StyledLineEndIndicatorCircle = styled.div`
   height: 7px;
   border-radius: 50%;
   position: absolute;
-  left: ${LEFT_WIDTH - 4}px;
+  left: ${({ isMobile }) => (isMobile ? LEFT_WIDTH_MOBILE - 4 : LEFT_WIDTH - 4)}px;
   top: -8px;
   border: 1px solid ${theme.palette.neutralQuaternary};
   /* background: ${theme.palette.neutralQuaternary}; */
@@ -52,7 +55,7 @@ const StyledLineEndIndicatorArrow = styled.div`
   border-bottom-color: transparent;
   transform: rotate(45deg);
   position: absolute;
-  left: ${LEFT_WIDTH - 4}px;
+  left: ${({ isMobile }) => (isMobile ? LEFT_WIDTH_MOBILE - 4 : LEFT_WIDTH - 4)}px;
   top: 1px;
 `
 
@@ -62,7 +65,7 @@ const StyledItemBlock = styled.div`
   padding-top: ${({ size }) => size * DAY_SIZE}px;
 `
 const StyledItemLeft = styled.div`
-  width: ${LEFT_WIDTH}px;
+  width: ${({ isMobile }) => (isMobile ? LEFT_WIDTH_MOBILE : LEFT_WIDTH)}px;
   flex: none;
   text-align: right;
   font-size: 13px;
@@ -71,12 +74,14 @@ const StyledItemLeft = styled.div`
     border-bottom: 1px solid ${theme.palette.neutralQuaternary};
     padding-right: 10px;
     padding-bottom: 2px;
+    white-space: nowrap;
   }
   .bottom {
     font-size: 12px;
     color: ${theme.palette.neutralTertiary};
     margin-top: 2px;
     padding-right: 10px;
+    white-space: nowrap;
     span {
       margin-left: 10px;
     }
@@ -129,15 +134,26 @@ export default function Timeline(props: IProps) {
   const [dataList, fromStartOfMonth] = populateData(data, id)
 
   const dataMonthIsBeforeMonth = differenceInMonths(new Date(), new Date(id)) > 0
+
+  const isMobile = cheeckIsMobile()
+
   return (
-    <FixedTopLayout top={<DateSelectInInfoPage data={date} value={id} />}>
-      <StyledBlockWrap>
-        {dataMonthIsBeforeMonth ? <StyledLineEndIndicatorCircle /> : <StyledLineEndIndicatorArrow />}
+    <FixedTopLayout top={<DateSelectInInfoPage data={date} value={id} isMobile={isMobile} />}>
+      <StyledBlockWrap isMobile={isMobile}>
+        {dataMonthIsBeforeMonth ? (
+          <StyledLineEndIndicatorCircle isMobile={isMobile} />
+        ) : (
+          <StyledLineEndIndicatorArrow isMobile={isMobile} />
+        )}
         {dataList.map((item, idx) => {
           const { date, body, intervalDaysOfPrevOrEnd, ...rest } = item
           return (
-            <StyledItemBlock key={`${date} || ${idx}`} size={idx === 0 ? 2 : intervalDaysOfPrevOrEnd || 1}>
-              <StyledItemLeft>
+            <StyledItemBlock
+              key={`${date} || ${idx}`}
+              size={idx === 0 ? 2 : intervalDaysOfPrevOrEnd || 1}
+              isMobile={isMobile}
+            >
+              <StyledItemLeft isMobile={isMobile}>
                 <div>
                   <span className="top">{date}</span>
                   <div className="bottom">
