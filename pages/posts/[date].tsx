@@ -1,6 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import { getPostsDateList, getPostsDateFileList } from '../../lib/getPosts'
+import { getPostsDateList, getPostsDateFileList, getPostsFileList } from '../../lib/getPosts'
 import Layout from './layout'
 import styled from 'styled-components'
 import GroupList from './GroupList'
@@ -12,7 +12,7 @@ const StyledContent = styled.div`
 `
 
 export default function PostsDate(props) {
-  const { date, data } = props
+  const { date, data, allPosts } = props
   const dateMap = {}
   const dataList = data.map((item) => ({
     ...item,
@@ -34,7 +34,18 @@ export default function PostsDate(props) {
   }))
 
   return (
-    <Layout>
+    <Layout
+      data={[
+        {
+          name: '',
+          list: allPosts,
+        },
+        {
+          name: date,
+          list: [],
+        },
+      ]}
+    >
       <StyledContent isMobile={isMobile()}>
         <GroupList items={dataList} groups={groups} labelLink={false} />
       </StyledContent>
@@ -47,10 +58,12 @@ PostsDate.propTypes = {}
 export async function getStaticProps({ params }) {
   const date = params.date
   const data = getPostsDateFileList(date)
+  const allPosts = getPostsFileList()
   return {
     props: {
       date,
       data,
+      allPosts,
     },
   }
 }

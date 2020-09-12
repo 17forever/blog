@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import PropTypes from 'prop-types'
-import { getPostsFileIdList, getPostData } from '../../lib/getPosts'
+import { getPostsFileIdList, getPostData, getPostsFileList, getPostsDateFileList } from '../../lib/getPosts'
 import Markdown from '../../components/Markdown'
 import { MessageBar, MessageBarType } from '@fluentui/react'
 import Layout from './layout'
@@ -44,11 +44,36 @@ export default function PostInfo(props) {
   const {
     name,
     data: { body, outdate, ...restProps },
+    id = [],
+    allPosts = [],
+    datePosts = [],
   } = props
   const [showMessage, setShowMessage] = useState(outdate !== undefined)
   const isMobile = checkIsMobile()
+  const groupDate = id[0]
   return (
-    <Layout current={name}>
+    <Layout
+      current={name}
+      data={[
+        {
+          name: '',
+          list: allPosts,
+        },
+        {
+          name: groupDate,
+          list: [
+            {
+              date: groupDate,
+              list: datePosts,
+            },
+          ],
+        },
+        {
+          name,
+          list: [],
+        },
+      ]}
+    >
       <StyledContent isMobile={isMobile}>
         <StyledInfo>
           {Object.keys({ ...restProps }).map((key) => (
@@ -80,9 +105,13 @@ PostInfo.propTypes = {}
 
 export async function getStaticProps({ params }) {
   const data = getPostData(params.id)
+  const allPosts = getPostsFileList()
+  const datePosts = getPostsDateFileList(params.id[0])
   return {
     props: {
       ...data,
+      allPosts,
+      datePosts,
     },
   }
 }

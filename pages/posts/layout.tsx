@@ -1,100 +1,197 @@
 // @ts-nocheck
 import React, { useState, useEffect } from 'react'
 import PropTypes from 'prop-types'
-import { Breadcrumb, IBreadcrumbItem, IDividerAsProps, Icon, TooltipHost } from '@fluentui/react'
+import {
+  Dropdown,
+  DropdownMenuItemType,
+  IDropdownStyles,
+  IDropdownOption,
+  Icon,
+  DefaultButton,
+  IContextualMenuProps,
+  IContextualMenuItem,
+} from '@fluentui/react'
 import { useRouter } from 'next/router'
 import styled from 'styled-components'
 import FixedTopLayout from '../../components/Layout/FixedTop'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
+import theme from '../../utils/getTheme'
 
-const StyledBreadcrumb = styled(Breadcrumb)`
-  /* margin: ${({ isMobile }) => (isMobile ? '0 0 0 10px' : '0')}; */
-  margin: 0;
-  h4 {
-    margin: 0;
-    div {
-      position: relative;
-      bottom: ${({ isMobile }) => (isMobile ? 0 : '2px')};
+const StyledBreadcrumb = styled.div`
+  display: flex;
+  align-items: center;
+`
+
+const StyledBreadcrumbItem = styled.div`
+  display: flex;
+  align-items: center;
+  white-space: nowrap;
+  &:not(:last-child) {
+    &:after {
+      content: '/';
+      padding: 0 8px;
+      color: ${theme.palette.neutralSecondary};
     }
   }
-  .ms-Breadcrumb-list {
-    display: flex;
-    align-items: center;
+  .ms-Dropdown-title {
+    border: none;
+    padding: 0;
+    font-size: 17px;
+    color: ${theme.palette.neutralDark};
+  }
+  button {
+    padding: 0 10px;
+    border: none;
+    font-size: 17px;
+    color: ${theme.palette.neutralDark};
+    min-width: unset;
+    .ms-Button-flexContainer {
+      .ms-Button-label {
+        margin: 0;
+        font-weight: normal;
+      }
+      & > i[data-icon-name='ChevronDown'] {
+        display: none;
+      }
+    }
+  }
+  &.pc {
+    &:not(:last-child) {
+      &:after {
+        padding: 0 5px;
+      }
+    }
+    &:last-child {
+      padding-left: 10px;
+    }
   }
 `
 
-const getBreadcrumbItemDivider = (dividerProps: IDividerAsProps): JSX.Element => {
-  return (
-    <span aria-hidden="true" style={{ padding: 5 }}>
-      /
-    </span>
-  )
-}
-
-const getCustomOverflowIcon = (): JSX.Element => {
+const getPostIndexIcon = (): JSX.Element => {
   return <Icon iconName="ChevronDown" />
 }
 
 export default function PostsLayout(props) {
-  const { children, current } = props
-  const [data, setData] = useState([])
+  const { children, current, data = [] } = props
 
-  const router = useRouter()
-  useEffect(() => {
-    const path = router.asPath
-    const pathSplit = path.split('/')
-    const pathData = pathSplit.slice(2).map((path) => ({
-      text: path,
-      key: path,
-    }))
-    // 设置可跳转处的点击事件
-    if (pathData.length > 1) {
-      pathData.slice(0, -1).forEach((item) => {
-        item.onClick = onBreadcrumbItemClick
+  const getDropdownOptions = (data) => {
+    const options = []
+    data.forEach((dataItem) => {
+      const { date, list = [] } = dataItem
+      options.push({
+        key: date,
+        text: date,
+        itemType: DropdownMenuItemType.Header,
       })
-    }
-    // 设置当前页的属性
-    if (current) {
-      pathData.slice(-1)[0].text = current
-      pathData.slice(-1)[0].key = current
-    }
-    pathData.slice(-1)[0].isCurrentItem = true
-    pathData.slice(-1)[0].as = 'h4'
-    // 设置posts首页
-    pathData.unshift({
-      text: <span title="文章首页">{'<'}</span>,
-      key: '/posts',
-      onClick: () => {
-        router.push('/posts')
-      },
+      list.forEach((listItem) => {
+        const { name, path, groupDate } = listItem
+        options.push({
+          key: name,
+          text: name,
+          groupDate: groupDate || date,
+          path,
+        })
+      })
     })
-
-    setData(pathData)
-  }, [])
-
-  const onBreadcrumbItemClick = (ev: React.MouseEvent<HTMLElement>, item: IBreadcrumbItem): void => {
-    router.push(`/posts/${item!.key}`)
+    return options
   }
 
-  const isMobile = checkIsMobile()
+  const router = useRouter()
+  const handleChange = (e, option) => {
+    const { groupDate, path } = option
+    router.push(`/posts/${groupDate}/${path}`)
+  }
 
-  return (
-    <FixedTopLayout
-      top={
-        <StyledBreadcrumb
-          items={data}
-          maxDisplayedItems={3}
-          ariaLabel="页面导航"
-          dividerAs={getBreadcrumbItemDivider}
-          onRenderOverflowIcon={getCustomOverflowIcon}
-          overflowAriaLabel="更多链接"
-          isMobile={isMobile}
-        />
-      }
-    >
-      {children}
-    </FixedTopLayout>
+  const mobileBreadcrumb = (
+    <StyledBreadcrumb>
+      {data.map((item, idx) => {
+        const { name, list } = item
+        return (
+          <StyledBreadcrumbItem key={`${idx}`}>
+            {list.length ? (
+              <Dropdown
+                placeholder={name || getPostIndexIcon()}
+                options={getDropdownOptions(list)}
+                selectedKey=""
+                onChange={handleChange}
+                onRenderCaretDown={() => null}
+              />
+            ) : (
+              name
+            )}
+          </StyledBreadcrumbItem>
+        )
+      })}
+    </StyledBreadcrumb>
   )
+
+  const getMenuItems = (data) => {
+    console.log(data)
+    if (data.length === 1) {
+      const { date, list } = data[0]
+      return list.map((listItem) => {
+        const { name, path } = listItem
+        return {
+          key: name,
+          text: name,
+          onClick: () => {
+            router.push(`/posts/${date}/${path}`)
+          },
+        }
+      })
+    } else {
+      return data.map((dataItem) => {
+        const { date, list } = dataItem
+        return {
+          key: date,
+          text: `${date} (${list.length})`,
+          split: true,
+          onClick: () => {
+            router.push(`/posts/${date}`)
+          },
+          subMenuProps: {
+            items: list.map((listItem) => {
+              const { name, path } = listItem
+              return {
+                key: name,
+                text: name,
+                onClick: () => {
+                  router.push(`/posts/${date}/${path}`)
+                },
+              }
+            }),
+          },
+        }
+      })
+    }
+  }
+
+  const defaultBreadcrumb = (
+    <StyledBreadcrumb>
+      {data.map((item, idx) => {
+        const { name, list } = item
+        return (
+          <StyledBreadcrumbItem key={`${idx}`} className="pc">
+            {list.length ? (
+              <DefaultButton
+                text={name || getPostIndexIcon()}
+                menuProps={{
+                  shouldFocusOnMount: true,
+                  subMenuHoverDelay: 20,
+                  items: getMenuItems(list),
+                }}
+              />
+            ) : (
+              name
+            )}
+          </StyledBreadcrumbItem>
+        )
+      })}
+    </StyledBreadcrumb>
+  )
+
+  const isMobile = checkIsMobile()
+  return <FixedTopLayout top={isMobile ? mobileBreadcrumb : defaultBreadcrumb}>{children}</FixedTopLayout>
 }
 
 PostsLayout.propTypes = {}

@@ -28,8 +28,10 @@ export const StyledMenuToggle = styled(DefaultButton)`
   padding: 0;
   min-width: unset;
   margin-left: 20px;
+  background: transparent;
   i {
     font-size: 17px;
+    margin: 0;
   }
 `
 
