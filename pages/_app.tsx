@@ -4,12 +4,16 @@ import { Context as ResponsiveContext } from 'react-responsive'
 import { initializeIcons } from '@uifabric/icons'
 import 'normalize.css'
 import logTheme from '../utils/logTheme'
+import logContact from '../utils/logContact'
 import Layout from '../components/Layout/index'
 import 'highlight.js/styles/vs.css'
 import 'github-markdown-css'
 
 initializeIcons()
-logTheme()
+logContact()
+if (process.env.NODE_ENV === 'development') {
+  logTheme()
+}
 
 // @ts-ignore
 function App({ Component, pageProps }) {
