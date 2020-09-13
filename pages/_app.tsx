@@ -9,7 +9,7 @@ import Layout from '../components/Layout/index'
 import 'highlight.js/styles/vs.css'
 import 'github-markdown-css'
 
-initializeIcons()
+initializeIcons('https://17forever.me/fonts/fluentui/')
 logContact()
 if (process.env.NODE_ENV === 'development') {
   logTheme()
