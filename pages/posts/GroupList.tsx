@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
-import RouteLink from 'next/link'
+import RouteLink from '../../components/Link'
 import theme from '../../utils/getTheme'
 import { isMobile } from '../../components/Responsive'
 

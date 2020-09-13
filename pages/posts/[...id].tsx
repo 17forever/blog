@@ -8,6 +8,7 @@ import theme from '../../utils/getTheme'
 import styled from 'styled-components'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
 import PostPrevAndNext from './PostPrevAndNext'
+import Helmet from '../../components/Helmet'
 
 const StyledContent = styled.div`
   padding: ${({ isMobile }) => (isMobile ? '20px' : '40px')};
@@ -75,6 +76,7 @@ export default function PostInfo(props) {
         },
       ]}
     >
+      <Helmet title={name} />
       <StyledContent isMobile={isMobile}>
         <StyledInfo>
           {Object.keys({ ...restProps }).map((key) => (
