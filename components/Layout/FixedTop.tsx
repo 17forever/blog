@@ -27,6 +27,7 @@ const StyledTop = styled.div`
   }
   & > div {
     overflow-x: auto;
+    overflow-y: hidden;
   }
 `
 const StyledBottom = styled.div`
