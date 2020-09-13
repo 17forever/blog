@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/7inFen/blog.git"
+    "url": "git+https://github.com/17forever/blog.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/7inFen/blog/issues"
+    "url": "https://github.com/17forever/blog/issues"
   },
-  "homepage": "https://github.com/7inFen/blog#readme",
+  "homepage": "https://github.com/17forever/blog#readme",
   "dependencies": {
     "@fluentui/react": "^7.133.0",
     "@node-rs/jieba": "^0.6.0",

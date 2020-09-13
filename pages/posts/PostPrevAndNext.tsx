@@ -30,7 +30,7 @@ const StyledNone = styled.span`
 const ValueNone = () => <StyledNone>没有了</StyledNone>
 
 export default function PostPrevAndNext(props) {
-  const { currentPath, allPosts } = props
+  const { currentPath = '', allPosts = [] } = props
   const { prev, next } =
     allPosts
       .map((item) =>
