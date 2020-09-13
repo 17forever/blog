@@ -7,7 +7,7 @@ import GroupList from './GroupList'
 import { isMobile } from '../../components/Responsive'
 
 const StyledLayout = styled.div`
-  padding: ${({ isMobile }) => (isMobile ? '20px' : '0 0 0 40px')};
+  padding: ${({ isMobile }) => (isMobile ? '20px' : '17px 0 0 40px')};
 `
 
 export const PostsIndex: React.FunctionComponent = (props) => {

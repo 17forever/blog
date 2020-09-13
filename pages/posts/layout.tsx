@@ -16,6 +16,7 @@ import styled from 'styled-components'
 import FixedTopLayout from '../../components/Layout/FixedTop'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
 import theme from '../../utils/getTheme'
+import IconFont from '../../components/IconFont'
 
 const StyledBreadcrumb = styled.div`
   display: flex;
@@ -68,7 +69,8 @@ const StyledBreadcrumbItem = styled.div`
 `
 
 const getPostIndexIcon = (): JSX.Element => {
-  return <Icon iconName="ChevronDown" />
+  // return <Icon iconName="ChevronDown" />
+  return <IconFont icon="icon-down" />
 }
 
 export default function PostsLayout(props) {

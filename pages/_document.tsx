@@ -37,7 +37,7 @@ export default class MyDocument extends Document {
             {initialProps.styles}
             <style type="text/css" dangerouslySetInnerHTML={{ __html: styleTags }} />
             {sheet.getStyleElement()}
-            <script defer src="//at.alicdn.com/t/font_2045870_aqrzv8i71pd.js" />
+            <script defer src="//at.alicdn.com/t/font_2045870_y340y0faggo.js" />
           </>
         ),
       }
