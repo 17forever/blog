@@ -1,24 +1,14 @@
 import Link from 'next/link'
-import styled from 'styled-components'
-import { getTheme } from '@fluentui/react'
-
-const theme = getTheme()
-
-const StyledLink = styled.span`
-  a {
-    text-decoration: none;
-    color: ${theme.palette.themePrimary};
-    &:hover {
-      text-decoration: underline;
-    }
-  }
-`
+import { Link as FluentLink } from '@fluentui/react'
 
 const CustomLink = (props): JSX.Element => {
+  const { children, disabled = false, ...rest } = props
   return (
-    <StyledLink>
-      <Link {...props} />
-    </StyledLink>
+    <FluentLink as="span" disabled={disabled}>
+      <Link {...rest}>
+        <a>{children}</a>
+      </Link>
+    </FluentLink>
   )
 }
 

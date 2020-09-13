@@ -7,6 +7,7 @@ import Layout from './layout'
 import theme from '../../utils/getTheme'
 import styled from 'styled-components'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
+import PostPrevAndNext from './PostPrevAndNext'
 
 const StyledContent = styled.div`
   padding: ${({ isMobile }) => (isMobile ? '20px' : '40px')};
@@ -96,6 +97,7 @@ export default function PostInfo(props) {
         <StyledBody>
           <Markdown data={body} />
         </StyledBody>
+        <PostPrevAndNext currentPath={id.join('/')} allPosts={allPosts} />
       </StyledContent>
     </Layout>
   )

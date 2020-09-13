@@ -28,6 +28,7 @@
     "date-fns": "^2.16.1",
     "github-markdown-css": "^4.0.0",
     "highlight.js": "^10.1.2",
+    "immutable": "^4.0.0-rc.12",
     "markdown-it": "^11.0.0",
     "markdown-it-attrs": "^3.0.3",
     "markdown-it-link-attributes": "^3.0.0",
