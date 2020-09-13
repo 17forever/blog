@@ -25,9 +25,9 @@ export const StyledPanel = styled(Panel)`
 `
 export const StyledMenuToggle = styled(DefaultButton)`
   border: none;
-  padding: 0;
+  padding: 0 4px;
   min-width: unset;
-  margin-left: 20px;
+  margin-left: 16px;
   background: transparent;
   i {
     font-size: 17px;
@@ -37,6 +37,7 @@ export const StyledMenuToggle = styled(DefaultButton)`
 
 export const StyledMobileLayout = styled.div`
   ${commonStyles};
+  ${iconFontStyles};
   height: 100vh;
   overflow: auto;
   position: relative;

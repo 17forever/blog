@@ -27,16 +27,20 @@ const StyledBreadcrumbItem = styled.div`
   display: flex;
   align-items: center;
   white-space: nowrap;
+  /* mobile first */
+  &:last-child {
+    padding-left: 4px;
+  }
   &:not(:last-child) {
     &:after {
       content: '/';
-      padding: 0 8px;
+      padding: 0 5px;
       color: ${theme.palette.neutralSecondary};
     }
   }
   .ms-Dropdown-title {
     border: none;
-    padding: 0;
+    padding: 0 4px;
     font-size: 17px;
     color: ${theme.palette.neutralDark};
   }
@@ -57,11 +61,6 @@ const StyledBreadcrumbItem = styled.div`
     }
   }
   &.pc {
-    &:not(:last-child) {
-      &:after {
-        padding: 0 5px;
-      }
-    }
     &:last-child {
       padding-left: 10px;
     }

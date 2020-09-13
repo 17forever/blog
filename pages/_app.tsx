@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useMemo } from 'react'
 import Helmet from 'react-helmet'
 import { Context as ResponsiveContext } from 'react-responsive'
 import { initializeIcons } from '@uifabric/icons'
@@ -20,12 +20,19 @@ if (process.env.NODE_ENV === 'development') {
 function App({ Component, pageProps }) {
   const [viewportWidth, setViewportWidth] = useState(1920)
   useEffect(() => {
+    let resizeEvent: any = null
     if (typeof window !== 'undefined') {
-      setViewportWidth(window?.screen?.availWidth || viewportWidth)
+      handleSetCLientWidth()
+      resizeEvent = window.addEventListener('resize', handleSetCLientWidth)
+    }
+    return () => {
+      resizeEvent && window.removeEventListener('resize', handleSetCLientWidth)
     }
   }, [])
 
-  // TODO page resize event
+  const handleSetCLientWidth = () => {
+    setViewportWidth(document.documentElement.clientWidth)
+  }
 
   return (
     <ResponsiveContext.Provider value={{ width: viewportWidth }}>

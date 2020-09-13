@@ -24,9 +24,9 @@ const StyledTop = styled.div`
     top: 0;
     background: #fff;
     z-index: 2;
-    & > div {
-      overflow-x: auto;
-    }
+  }
+  & > div {
+    overflow-x: auto;
   }
 `
 const StyledBottom = styled.div`

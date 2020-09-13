@@ -21,7 +21,7 @@ export default ({ children }) => {
 export const isMobile = () => {
   const [result, setResult] = useState(false)
   useEffect(() => {
-    setResult(window?.screen?.availWidth <= 767 || false)
+    setResult(document?.documentElement?.clientWidth <= 767 || false)
   }, [])
   return result
 }

@@ -8,18 +8,19 @@ import WordCloud from './WordCloud'
 import times from '../../utils/times'
 import dynamic from 'next/dynamic'
 import GearLoading from '../../components/Loading/timeline_gear'
-import { Spinner, SpinnerSize } from '@fluentui/react'
 import { isMobile } from '../../components/Responsive'
+import Loading from '../../components/Loading'
 import cx from 'classnames'
 
 // Coachmark 无法在服务端渲染
 const Dropdown = dynamic(() => import('./DateSelect'), {
   loading: () => (
-    <StyledGearLoading>
-      <GearLoading />
-      传送器部署中
-    </StyledGearLoading>
+    // <StyledGearLoading>
+    //   <GearLoading />
+    //   传送器部署中
+    // </StyledGearLoading>
     // <Spinner label="传送器部署中" size={SpinnerSize.large}  />
+    <Loading label="传送器部署中" />
   ),
 })
 

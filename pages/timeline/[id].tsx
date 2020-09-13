@@ -14,7 +14,7 @@ const LEFT_WIDTH_MOBILE = 100
 const DAY_SIZE = 20
 
 const StyledBlockWrap = styled.div`
-  margin: ${({ isMobile }) => (isMobile ? 20 : 50)}px;
+  margin: ${({ isMobile }) => (isMobile ? '30px 20px 40px 10px' : '50px')};
   position: relative;
   &:before {
     content: '';

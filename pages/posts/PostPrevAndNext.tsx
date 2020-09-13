@@ -22,6 +22,10 @@ const StyledItem = styled.div`
     width: 60px;
     flex: none;
   }
+  .value {
+    display: flex;
+    align-items: center;
+  }
 `
 const StyledNone = styled.span`
   color: ${theme.palette.neutralTertiary};
