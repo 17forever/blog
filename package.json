@@ -1,5 +1,5 @@
 {
-  "name": "blog",
+  "name": "17forever.me",
   "version": "1.0.0",
   "scripts": {
     "test": "tsc",
@@ -13,14 +13,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/17forever/blog.git"
+    "url": "git+https://github.com/17forever/me.git"
   },
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/17forever/blog/issues"
+    "url": "https://github.com/17forever/me/issues"
   },
-  "homepage": "https://github.com/17forever/blog#readme",
+  "homepage": "https://github.com/17forever/me#readme",
   "dependencies": {
     "@fluentui/react": "^7.133.0",
     "@node-rs/jieba": "^0.6.0",

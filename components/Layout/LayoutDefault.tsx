@@ -28,8 +28,8 @@ export const LeftComponent = () => {
         <Menu />
       </LeftTop>
       <LeftBottom>
-        <Link href="https://github.com/17forever/blog/actions" target="_blank">
-          <img src="https://github.com/17forever/blog/workflows/CI/badge.svg" />
+        <Link href="https://github.com/17forever/me/actions" target="_blank">
+          <img src={`https://github.com/17forever/me/workflows/CI/badge.svg?now=${Date.now()}`} />
         </Link>
       </LeftBottom>
     </>
