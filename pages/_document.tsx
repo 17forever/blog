@@ -3,6 +3,7 @@ import Document, { DocumentContext } from 'next/document'
 import { ServerStyleSheet } from 'styled-components'
 import { Stylesheet, InjectionMode } from '@uifabric/merge-styles'
 import { resetIds } from '@uifabric/utilities'
+import projectConfig from '../config/project'
 
 // Do this in file scope to initialize the stylesheet before Fabric components are imported.
 const stylesheet = Stylesheet.getInstance()
@@ -37,7 +38,7 @@ export default class MyDocument extends Document {
             {initialProps.styles}
             <style type="text/css" dangerouslySetInnerHTML={{ __html: styleTags }} />
             {sheet.getStyleElement()}
-            <script defer src="//at.alicdn.com/t/font_2045870_y340y0faggo.js" />
+            <script defer src={projectConfig.iconfont} />
           </>
         ),
       }

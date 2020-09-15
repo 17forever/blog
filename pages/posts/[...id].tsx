@@ -9,6 +9,7 @@ import styled from 'styled-components'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
 import PostPrevAndNext from './PostPrevAndNext'
 import Helmet from '../../components/Helmet'
+import Weather from '../../components/Weather'
 
 const StyledContent = styled.div`
   padding: ${({ isMobile }) => (isMobile ? '20px' : '40px')};
@@ -45,7 +46,7 @@ const OUTDATE_TEXT = '文中涉及的技术可能已经过时，甚至无法正�
 export default function PostInfo(props) {
   const {
     name,
-    data: { body, outdate, ...restProps },
+    data: { body, outdate, weather = '', ...restProps },
     id = [],
     allPosts = [],
     datePosts = [],
@@ -79,6 +80,7 @@ export default function PostInfo(props) {
       <Helmet title={name} />
       <StyledContent isMobile={isMobile}>
         <StyledInfo>
+          <Weather>{weather}</Weather>
           {Object.keys({ ...restProps }).map((key) => (
             <StyledInfoItem key={key}>{restProps[key]}</StyledInfoItem>
           ))}

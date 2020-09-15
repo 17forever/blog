@@ -7,7 +7,7 @@ import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from '
 import FixedTopLayout from '../../components/Layout/FixedTop'
 import DateSelectInInfoPage from './DateSelectInInfoPage'
 import { isMobile as cheeckIsMobile } from '../../components/Responsive'
-import cx from 'classnames'
+import Weather from '../../components/Weather'
 
 const LEFT_WIDTH = 170
 const LEFT_WIDTH_MOBILE = 100
@@ -79,10 +79,13 @@ const StyledItemLeft = styled.div`
   .bottom {
     font-size: 12px;
     color: ${theme.palette.neutralTertiary};
-    margin-top: 2px;
+    margin-top: 4px;
     padding-right: 10px;
     white-space: nowrap;
-    span {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    span:not(.weather) {
       margin-left: 10px;
     }
   }
@@ -146,7 +149,7 @@ export default function Timeline(props: IProps) {
           <StyledLineEndIndicatorArrow isMobile={isMobile} />
         )}
         {dataList.map((item, idx) => {
-          const { date, body, intervalDaysOfPrevOrEnd, ...rest } = item
+          const { date, body, intervalDaysOfPrevOrEnd, weather = '', ...rest } = item
           return (
             <StyledItemBlock
               key={`${date} || ${idx}`}
@@ -157,6 +160,7 @@ export default function Timeline(props: IProps) {
                 <div>
                   <span className="top">{date}</span>
                   <div className="bottom">
+                    <Weather>{weather}</Weather>
                     {Object.keys({ ...rest }).map((key) => (
                       <span key={key}>{rest[key]}</span>
                     ))}
