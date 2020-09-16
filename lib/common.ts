@@ -22,5 +22,7 @@ export const getFilePath = (filePath: string) => getFileList(filePath).map((name
 export const getFileInfo = (...filePath: string[]): string =>
   fs.readFileSync(addExtension(path.join(dataDirectory, ...filePath)), 'utf-8') || ''
 
-export const sortByDate = (list: any[]): any[] =>
-  list.sort((prev, next) => (isBefore(new Date(prev?.date), new Date(next?.date)) ? 1 : -1))
+export const sortByDate = (list: any[], key?: string): any[] =>
+  list.sort((prev, next) =>
+    isBefore(new Date(prev?.date || prev?.[key] || prev), new Date(next?.date || next?.[key] || next)) ? 1 : -1,
+  )

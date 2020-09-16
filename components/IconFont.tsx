@@ -1,3 +1,4 @@
+/* eslint-disable complexity */
 import React from 'react'
 import PropTypes from 'prop-types'
 import cx from 'classnames'
@@ -60,7 +61,7 @@ export default function IconFont(props) {
     default:
       break
   }
-  return (
+  return icon ? (
     <StyledSpan
       title={weather}
       className={cx({
@@ -71,6 +72,8 @@ export default function IconFont(props) {
         <use xlinkHref={`#${icon}`} />
       </svg>
     </StyledSpan>
+  ) : (
+    icon
   )
 }
 

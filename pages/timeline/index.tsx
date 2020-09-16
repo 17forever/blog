@@ -1,16 +1,15 @@
-// @ts-nocheck
-import React, { useState, useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
-import { getTimelineFileListWithHotWords } from '../../lib/getTimeline'
-import TagCloud from 'react-tag-cloud'
-import styled from 'styled-components'
-import WordCloud from './WordCloud'
-import times from '../../utils/times'
-import dynamic from 'next/dynamic'
-import GearLoading from '../../components/Loading/timeline_gear'
-import { isMobile } from '../../components/Responsive'
-import Loading from '../../components/Loading'
+import React, { useState } from 'react'
 import cx from 'classnames'
+import dynamic from 'next/dynamic'
+import styled from 'styled-components'
+import Loading from '../../components/Loading'
+import { isMobile } from '../../components/Responsive'
+import { getTimelineFileListWithHotWords } from '../../lib/getTimeline'
+import times from '../../utils/times'
+
+import WordCloud from './WordCloud'
+
+// import GearLoading from '../../components/Loading/timeline_gear'
 
 // Coachmark 无法在服务端渲染
 const Dropdown = dynamic(() => import('./DateSelect'), {
@@ -56,22 +55,22 @@ const StyledBottom = styled.div`
   justify-content: center;
   align-items: flex-start;
 `
-const StyledGearLoading = styled.div`
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  color: grey;
-  svg {
-    margin-bottom: 5px;
-  }
-`
+// const StyledGearLoading = styled.div`
+//   display: flex;
+//   flex-direction: column;
+//   justify-content: flex-start;
+//   align-items: center;
+//   color: grey;
+//   svg {
+//     margin-bottom: 5px;
+//   }
+// `
 
 export default function TimeLineIndex(props) {
   const { data } = props
   const [selectedItem, setSelectedItem] = useState()
-
-  const handleChange = (value) => {
+  // console.log(selectedItem)
+  const handleChange = (value: ITimeLineIndexSelectedItem) => {
     setSelectedItem(value)
   }
 
@@ -92,8 +91,6 @@ export default function TimeLineIndex(props) {
     </StyledLayout>
   )
 }
-
-TimeLineIndex.propTypes = {}
 
 export async function getStaticProps() {
   return {

@@ -1,12 +1,13 @@
 import React from 'react'
 import { getTimelineFileList, getTimelineData } from '../../lib/getTimeline'
+import { sortByDate } from '../../lib/common'
 import styled from 'styled-components'
 import theme from '../../utils/getTheme'
 import Markdown from '../../components/Markdown'
 import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from 'date-fns'
 import FixedTopLayout from '../../components/Layout/FixedTop'
 import DateSelectInInfoPage from './DateSelectInInfoPage'
-import { isMobile as cheeckIsMobile } from '../../components/Responsive'
+import { isMobile as checkIsMobile } from '../../components/Responsive'
 import Weather from '../../components/Weather'
 
 const LEFT_WIDTH = 170
@@ -138,7 +139,7 @@ export default function Timeline(props: IProps) {
 
   const dataMonthIsBeforeMonth = differenceInMonths(new Date(), new Date(id)) > 0
 
-  const isMobile = cheeckIsMobile()
+  const isMobile = checkIsMobile()
 
   return (
     <FixedTopLayout top={<DateSelectInInfoPage data={date} value={id} isMobile={isMobile} />}>
@@ -187,7 +188,7 @@ interface IParams {
 
 export async function getStaticProps({ params }: IParams) {
   const data = getTimelineData(params.id)
-  const date = getTimelineFileList().map((item) => item.params.id)
+  const date = sortByDate(getTimelineFileList().map((item) => item.params.id))
   return {
     props: {
       ...data,

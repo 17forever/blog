@@ -1,26 +1,29 @@
 module.exports = {
+  // "root": true,
+  // parser: '@typescript-eslint/parser',
+  // parserOptions: { project: './tsconfig.json' },
+  // env: { es6: true },
+  // ignorePatterns: ['node_modules', 'build', 'coverage', 'out', 'dist'],
+  // plugins: ['import', 'eslint-comments', 'functional'],
   extends: [
     'alloy',
     'alloy/react',
     'alloy/typescript',
+    'plugin:@typescript-eslint/recommended',
+    // 'eslint:recommended',
+    // 'plugin:eslint-comments/recommended',
+    // // "plugin:react/recommended",
+    // 'plugin:import/typescript',
+    // 'plugin:functional/lite',
+    // 'prettier/@typescript-eslint',
+    // "plugin:prettier/recommended"
   ],
-  env: {
-    // 你的环境变量（包含多个预定义的全局变量）
-    //
-    browser: true,
-    node: true,
-    es6: true
-    // mocha: true,
-    // jest: true,
-    // jquery: true
-  },
-  globals: {
-    JSX: true
-    // 你的全局变量（设置为 false 表示它不允许被重新赋值）
-    //
-    // myGlobal: false
-  },
+  // globals: { BigInt: true, console: true, WebAssembly: true },
   rules: {
-    // 自定义你的规则
+    // '@typescript-eslint/explicit-module-boundary-types': 'off',
+    // 'eslint-comments/disable-enable-pair': ['error', { allowWholeFile: true }],
+    // 'eslint-comments/no-unused-disable': 'error',
+    // 'import/order': ['error', { 'newlines-between': 'always', alphabetize: { order: 'asc' } }],
+    // 'sort-imports': ['error', { ignoreDeclarationSort: true, ignoreCase: true }],
   },
-};
+}

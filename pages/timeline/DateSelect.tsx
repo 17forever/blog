@@ -1,13 +1,7 @@
-// @ts-nocheck
-import React, { useState, useEffect, useRef } from 'react'
-import PropTypes from 'prop-types'
-import { getTimelineFileListWithHotWords } from '../../lib/getTimeline'
+import React, { useState, useRef } from 'react'
 import { useRouter } from 'next/router'
 import { Dropdown, IDropdownOption, PrimaryButton, Coachmark, TeachingBubbleContent } from '@fluentui/react'
-import TagCloud from 'react-tag-cloud'
 import styled from 'styled-components'
-import WordCloud from './WordCloud'
-import times from '../../utils/times'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
 import cx from 'classnames'
 

@@ -24,26 +24,29 @@ interface IWordsItem {
 }
 
 export const getTimelineFileListWithHotWords = (): IItem[] => {
-  return getFileList(baseDirection).map(
-    (id: string): IItem => {
-      // console.log(getTimelineData(id))
-      const analyzeText = getTimelineData(id).data.reduce((prev, next): string => {
-        prev += `${next?.mood || ''} ${next?.body || ''}`
-        return prev
-      }, '')
-      // console.log(analyzeText)
-      return {
-        id,
-        words: extract(analyzeText, times.myAge)
-          .map(
-            (item): IWordsItem => ({
-              word: item.keyword,
-              weight: Number(item.weight.toFixed(2)),
-            }),
-          )
-          .filter((i) => !!i.word.replace(/\s/g, '')),
-      }
-    },
+  return sortByDate(
+    getFileList(baseDirection).map(
+      (id: string): IItem => {
+        // console.log(getTimelineData(id))
+        const analyzeText = getTimelineData(id).data.reduce((prev, next): string => {
+          prev += `${next?.mood || ''} ${next?.body || ''}`
+          return prev
+        }, '')
+        // console.log(analyzeText)
+        return {
+          id,
+          words: extract(analyzeText, times.myAge)
+            .map(
+              (item): IWordsItem => ({
+                word: item.keyword,
+                weight: Number(item.weight.toFixed(2)),
+              }),
+            )
+            .filter((i) => !!i.word.replace(/\s/g, '')),
+        }
+      },
+    ),
+    'id',
   )
 }
 
@@ -76,13 +79,12 @@ const parseTimelineContent = (content: string): IContentData[] => {
         if (match) {
           const groups = match?.groups || {}
           return {
-            ...Object.keys(groups).filter(key => !!groups[key]).reduce(
-              (prev, next) => {
+            ...Object.keys(groups)
+              .filter((key) => !!groups[key])
+              .reduce((prev, next) => {
                 prev[next] = groups[next]
                 return prev
-              },
-              {}
-            ),
+              }, {}),
             body: text.replace(match[0], ''),
           }
         }
