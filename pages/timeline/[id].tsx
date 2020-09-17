@@ -4,17 +4,35 @@ import { sortByDate } from '../../lib/common'
 import styled from 'styled-components'
 import theme from '../../utils/getTheme'
 import Markdown from '../../components/Markdown'
-import { differenceInDays, differenceInMonths, startOfMonth, endOfMonth } from 'date-fns'
+import { differenceInDays, differenceInMonths, startOfMonth } from 'date-fns'
 import FixedTopLayout from '../../components/Layout/FixedTop'
 import DateSelectInInfoPage from './DateSelectInInfoPage'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
 import Weather from '../../components/Weather'
+import { GetStaticProps, GetStaticPaths } from 'next'
+
+interface ITimelineInfoItem {
+  body: string
+  date: string
+  mood?: string
+  weather?: string
+}
+
+interface ITimelineInfoItemWithIntervalDaysItem extends ITimelineInfoItem {
+  intervalDaysOfPrevOrEnd: number
+}
+
+interface IProps {
+  data: ITimelineInfoItem[]
+  id: string
+  date: string
+}
 
 const LEFT_WIDTH = 170
 const LEFT_WIDTH_MOBILE = 100
 const DAY_SIZE = 20
 
-const StyledBlockWrap = styled.div`
+const StyledBlockWrap = styled.div<{ isMobile: boolean }>`
   margin: ${({ isMobile }) => (isMobile ? '30px 20px 40px 10px' : '50px')};
   position: relative;
   &:before {
@@ -37,7 +55,7 @@ const StyledBlockWrap = styled.div`
     bottom: 0;
   }
 `
-const StyledLineEndIndicatorCircle = styled.div`
+const StyledLineEndIndicatorCircle = styled.div<{ isMobile: boolean }>`
   width: 7px;
   height: 7px;
   border-radius: 50%;
@@ -48,7 +66,7 @@ const StyledLineEndIndicatorCircle = styled.div`
   /* background: ${theme.palette.neutralQuaternary}; */
 `
 
-const StyledLineEndIndicatorArrow = styled.div`
+const StyledLineEndIndicatorArrow = styled.div<{ isMobile: boolean }>`
   width: 7px;
   height: 7px;
   border: 1px solid ${theme.palette.neutralQuaternary};
@@ -60,12 +78,12 @@ const StyledLineEndIndicatorArrow = styled.div`
   top: 1px;
 `
 
-const StyledItemBlock = styled.div`
+const StyledItemBlock = styled.div<{ size: number; isMobile: boolean }>`
   display: flex;
   line-height: 1.6;
   padding-top: ${({ size }) => size * DAY_SIZE}px;
 `
-const StyledItemLeft = styled.div`
+const StyledItemLeft = styled.div<{ isMobile: boolean }>`
   width: ${({ isMobile }) => (isMobile ? LEFT_WIDTH_MOBILE : LEFT_WIDTH)}px;
   flex: none;
   text-align: right;
@@ -105,44 +123,31 @@ const StyledItemRight = styled.div`
   }
 `
 
-const StyledMbOfStartMonth = styled.div`
+const StyledMbOfStartMonth = styled.div<{ size: number }>`
   height: ${({ size }) => size * DAY_SIZE}px;
 `
 
-interface IProps {
-  paths: string
-  data: any[]
-  id: string
-}
-
-const populateData = (data, date: string) => {
+const populateData = (data: ITimelineInfoItem[], date: string): [ITimelineInfoItemWithIntervalDaysItem[], number] => {
   const START_OF_MONTH = startOfMonth(new Date(date))
-  const END_OF_MONTH = endOfMonth(new Date(date))
-  const dataList: [] = data.map((item, idx) => {
-    const itemDate = new Date(item!.date)
+  const dataList: ITimelineInfoItemWithIntervalDaysItem[] = data.map((item, idx) => {
+    const itemDate = new Date(item.date)
     return {
       ...item,
-      // isEndOfMonth: differenceInDays(END_OF_MONTH, itemDate) === 0,
-      intervalDaysOfPrevOrEnd:
-        idx === 0
-          ? // ? differenceInDays(END_OF_MONTH, itemDate)
-            0
-          : differenceInDays(new Date(data[idx - 1]!.date), itemDate) - 1,
+      intervalDaysOfPrevOrEnd: idx === 0 ? 0 : differenceInDays(new Date(data[idx - 1].date), itemDate) - 1,
     }
   })
   return [dataList, differenceInDays(new Date(dataList.slice(-1)[0].date), START_OF_MONTH)]
 }
 
-export default function Timeline(props: IProps) {
+const TimelineInfo: React.FC<IProps> = (props) => {
   const { data, id, date } = props
   const [dataList, fromStartOfMonth] = populateData(data, id)
 
   const dataMonthIsBeforeMonth = differenceInMonths(new Date(), new Date(id)) > 0
 
   const isMobile = checkIsMobile()
-
   return (
-    <FixedTopLayout top={<DateSelectInInfoPage data={date} value={id} isMobile={isMobile} />}>
+    <FixedTopLayout top={<DateSelectInInfoPage data={date} value={id} />}>
       <StyledBlockWrap isMobile={isMobile}>
         {dataMonthIsBeforeMonth ? (
           <StyledLineEndIndicatorCircle isMobile={isMobile} />
@@ -180,13 +185,9 @@ export default function Timeline(props: IProps) {
   )
 }
 
-interface IParams {
-  params: {
-    id: string
-  }
-}
+export default TimelineInfo
 
-export async function getStaticProps({ params }: IParams) {
+export const getStaticProps: GetStaticProps = async ({ params }) => {
   const data = getTimelineData(params.id)
   const date = sortByDate(getTimelineFileList().map((item) => item.params.id))
   return {
@@ -197,7 +198,7 @@ export async function getStaticProps({ params }: IParams) {
   }
 }
 
-export async function getStaticPaths() {
+export const getStaticPaths: GetStaticPaths = async () => {
   const paths = getTimelineFileList()
   return {
     paths,

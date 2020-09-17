@@ -1,4 +1,5 @@
-import React, { useState, useEffect, useMemo } from 'react'
+import React, { useState, useEffect } from 'react'
+import { AppProps } from 'next/app'
 import Helmet from 'react-helmet'
 import { Context as ResponsiveContext } from 'react-responsive'
 import { initializeIcons } from '@uifabric/icons'
@@ -16,21 +17,20 @@ if (process.env.NODE_ENV === 'development') {
   logTheme()
 }
 
-// @ts-ignore
-function App({ Component, pageProps }) {
+const App: React.FC<AppProps> = ({ Component, pageProps }) => {
   const [viewportWidth, setViewportWidth] = useState(1920)
   useEffect(() => {
     let resizeEvent: any = null
     if (typeof window !== 'undefined') {
-      handleSetCLientWidth()
-      resizeEvent = window.addEventListener('resize', handleSetCLientWidth)
+      handleSetClientWidth()
+      resizeEvent = window.addEventListener('resize', handleSetClientWidth)
     }
     return () => {
-      resizeEvent && window.removeEventListener('resize', handleSetCLientWidth)
+      resizeEvent && window.removeEventListener('resize', handleSetClientWidth)
     }
   }, [])
 
-  const handleSetCLientWidth = () => {
+  const handleSetClientWidth = () => {
     setViewportWidth(document.documentElement.clientWidth)
   }
 

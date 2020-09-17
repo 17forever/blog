@@ -1,9 +1,18 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import IconFont from './IconFont'
 
-export default function Weather({ children = '' }) {
-  return children.split('、').map((weather) => <IconFont key={weather} weather={weather} />)
+interface IProps {
+  children: string
 }
 
-Weather.propTypes = {}
+const Weather: React.FC<IProps> = ({ children = '' }) => {
+  return (
+    <>
+      {children.split('、').map((weather) => (
+        <IconFont key={weather} weather={weather} />
+      ))}
+    </>
+  )
+}
+
+export default Weather

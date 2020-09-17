@@ -1,9 +1,9 @@
-import React, { useState, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import React, { FC } from 'react'
 import TagCloud from 'react-tag-cloud'
 import styled from 'styled-components'
 import theme from '../../utils/getTheme'
 import { isMobile } from '../../components/Responsive'
+import { IWordItem } from '../../types/timeline'
 
 const {
   themeDark,
@@ -42,6 +42,10 @@ const colorList = [
   greenDark,
 ]
 
+interface IProps {
+  data: IWordItem[]
+}
+
 const StyledTagItem = styled.div`
   @keyframes tagShow {
     from {
@@ -55,23 +59,22 @@ const StyledTagItem = styled.div`
 `
 
 // min <= n < max
-function random(min, max) {
+const random = (min: number, max: number): number => {
   return Math.floor(Math.random() * (max - min)) + min
 }
 
 const MIN_FONT_SIZE = 20
-
 const MIN_OPACITY = 0.7
 
-export default function TimeLineWordCloud(props) {
+const TimeLineWordCloud: FC<IProps> = (props) => {
   const { data = [] } = props
 
   const weightAll = data.reduce((prev, next) => prev + (next?.weight || 0), 0)
 
   const weightMin = data.reduce((prev, next) => (prev?.weight > next?.weight ? next : prev), data[0])?.weight
 
-  const weightRate = (weight) => weight / weightAll
-  const getOpacity = (weight) => MIN_OPACITY + weightRate(weight) * 2
+  const weightRate = (weight: number): number => weight / weightAll
+  const getOpacity = (weight: number): number => MIN_OPACITY + weightRate(weight) * 2
   const getFontSize = (weight: number, weightMin: number, fontSizeWeight: number): number => {
     return MIN_FONT_SIZE + (weight / weightMin) * fontSizeWeight
   }
@@ -104,3 +107,5 @@ export default function TimeLineWordCloud(props) {
     </TagCloud>
   )
 }
+
+export default TimeLineWordCloud

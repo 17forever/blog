@@ -1,9 +1,10 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useRef, FC } from 'react'
 import { useRouter } from 'next/router'
 import { Dropdown, IDropdownOption, PrimaryButton, Coachmark, TeachingBubbleContent } from '@fluentui/react'
 import styled from 'styled-components'
 import { isMobile as checkIsMobile } from '../../components/Responsive'
 import cx from 'classnames'
+import { ITimelineIndexDropdownItem } from '../../types/timeline'
 
 const StyledLayout = styled.div`
   display: flex;
@@ -54,9 +55,14 @@ const StyledBubbleContent = styled.p`
   line-height: 1.6;
 `
 
-export default function TimeLineIndex(props) {
+interface IProps {
+  data: ITimelineIndexDropdownItem[]
+  onChange: (value: ITimelineIndexDropdownItem) => void
+}
+
+const TimeLineIndexDateSelect: FC<IProps> = (props) => {
   const { data = [], onChange } = props
-  const [selectedItem, setSelectedItem] = useState()
+  const [selectedItem, setSelectedItem] = useState<ITimelineIndexDropdownItem>()
   const options: IDropdownOption[] = data.map((item) => ({
     key: item?.id,
     text: item?.id,
@@ -64,7 +70,7 @@ export default function TimeLineIndex(props) {
 
   const [showCoachmark, setShowCoachmark] = useState(false)
 
-  const handleChange = (e, option) => {
+  const handleChange = (e: React.FormEvent<HTMLDivElement>, option: IDropdownOption): void => {
     const value = option.key
     const item = data.filter((item) => item.id === value)[0]
     setSelectedItem(item)
@@ -89,7 +95,7 @@ export default function TimeLineIndex(props) {
       setTimeout(() => {
         setFlyButtonText('即将到达...')
       }, 3000)
-      router.push(`/timeline/${selectedItem.id}`)
+      router.push(`/timeline/${id}`)
     } else {
       setShowCoachmark(true)
     }
@@ -157,3 +163,5 @@ export default function TimeLineIndex(props) {
     </StyledLayout>
   )
 }
+
+export default TimeLineIndexDateSelect

@@ -1,6 +1,5 @@
 /* eslint-disable complexity */
 import React from 'react'
-import PropTypes from 'prop-types'
 import cx from 'classnames'
 import styled from 'styled-components'
 
@@ -12,8 +11,14 @@ const StyledSpan = styled.span`
   }
 `
 
-export default function IconFont(props) {
-  let { icon = '', weather = '' } = props
+interface IProps {
+  icon?: string
+  weather?: string
+}
+
+const IconFont: React.FC<IProps> = (props) => {
+  let { icon = '' } = props
+  const weather = props.weather
   switch (weather) {
     case '风':
     case '大风':
@@ -73,8 +78,8 @@ export default function IconFont(props) {
       </svg>
     </StyledSpan>
   ) : (
-    icon
+    ((icon as unknown) as React.ReactElement)
   )
 }
 
-IconFont.propTypes = {}
+export default IconFont

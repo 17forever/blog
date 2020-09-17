@@ -1,4 +1,4 @@
-import styled, { createGlobalStyle } from 'styled-components'
+import styled from 'styled-components'
 import { Panel, DefaultButton } from '@fluentui/react'
 import theme from '../utils/getTheme'
 import { iconFontStyles, commonStyles, contentStyles } from './common'

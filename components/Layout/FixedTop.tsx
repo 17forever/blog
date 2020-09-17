@@ -1,9 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import cx from 'classnames'
 import { isMobile } from '../Responsive'
 import { BackTopAnchor } from '../BackTop'
+
+interface IProps {
+  children: React.ReactNode
+  top?: React.ReactNode
+  center?: boolean
+}
 
 const StyledLayout = styled.div`
   height: 100%;
@@ -43,7 +48,8 @@ const StyledBottom = styled.div`
     min-height: calc(100vh - 152px);
   }
 `
-export default function FixedTop(props) {
+
+const FixedTop: React.FC<IProps> = (props) => {
   const { top, center, children } = props
   const mobile = isMobile()
   return (
@@ -72,4 +78,4 @@ export default function FixedTop(props) {
   )
 }
 
-FixedTop.propTypes = {}
+export default FixedTop

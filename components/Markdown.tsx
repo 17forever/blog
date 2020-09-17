@@ -1,11 +1,14 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import MarkdownIt from 'markdown-it'
 import hljs from 'highlight.js'
 import styled from 'styled-components'
 import theme from '../utils/getTheme'
 import mila from 'markdown-it-link-attributes'
 import markdownItAttrs from 'markdown-it-attrs'
+
+interface IProps {
+  data: string
+}
 
 const StyledMarkdown = styled.div`
   /* font-size: 14px; */
@@ -67,10 +70,10 @@ md.renderer.rules.image = (tokens, idx, options, env, slf) => {
   return slf.renderToken(tokens, idx, options)
 }
 
-export default function Markdown(props) {
+const Markdown: React.FC<IProps> = (props) => {
   const { data } = props
   const result = md.render(data)
   return <StyledMarkdown id="_markdown" className="markdown-body" dangerouslySetInnerHTML={{ __html: result }} />
 }
 
-Markdown.propTypes = {}
+export default Markdown
