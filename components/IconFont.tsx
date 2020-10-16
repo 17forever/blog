@@ -78,7 +78,7 @@ const IconFont: React.FC<IProps> = (props) => {
       </svg>
     </StyledSpan>
   ) : (
-    ((icon as unknown) as React.ReactElement)
+    ((weather ?? (icon as unknown)) as React.ReactElement)
   )
 }
 
