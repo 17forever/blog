@@ -8,7 +8,7 @@
     "push": "git add -A && git commit -m update && git push",
     "start": "next start --port 3100",
     "export": "npm run build && next export",
-    "deploy": "rm -rf node_modules/.cache && npm run export && touch out/.nojekyll && echo 17forever.me > out/CNAME && git add out/ -f && git commit -m \"Deploy out files to gh-pages\" && git subtree split --prefix out -b gh-pages_local && git push -f origin gh-pages_local:gh-pages && git branch -D gh-pages_local",
+    "deploy": "rm -rf node_modules/.cache && npm run export && touch out/.nojekyll && echo f17.me > out/CNAME && git add out/ -f && git commit -m \"Deploy out files to gh-pages\" && git subtree split --prefix out -b gh-pages_local && git push -f origin gh-pages_local:gh-pages && git branch -D gh-pages_local",
     "type-check": "tsc"
   },
   "repository": {
