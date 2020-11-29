@@ -46,7 +46,7 @@ const OUTDATE_TEXT = '文中涉及的技术可能已经过时，甚至无法正�
 export default function PostInfo(props) {
   const {
     name,
-    data: { body, outdate, weather = '', ...restProps },
+    data: { body, outdate, weather = '', date, update, ...restProps },
     id = [],
     allPosts = [],
     datePosts = [],
@@ -81,6 +81,7 @@ export default function PostInfo(props) {
       <StyledContent isMobile={isMobile}>
         <StyledInfo>
           <Weather>{weather}</Weather>
+    <StyledInfoItem title={update ? `更新时间：${update}` : ''}>{date}{update && ' *'}</StyledInfoItem>
           {Object.keys({ ...restProps }).map((key) => (
             <StyledInfoItem key={key}>{restProps[key]}</StyledInfoItem>
           ))}
